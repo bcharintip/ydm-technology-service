@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>YDM Technology Services — Transformation at the Front Line of Technology</title>
+<meta name="description" content="YDM Technology Service — transformation partner at the front line of technology. Enterprise platforms, data, and AI engineering.">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://ydm-technology-service.vercel.app/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="YDM Technology Services">
+<meta property="og:description" content="Transformation at the front line of technology.">
+<meta property="og:url" content="https://ydm-technology-service.vercel.app/">
+<meta property="og:image" content="https://ydm-technology-service.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="YDM Technology Services">
+<meta name="twitter:description" content="Transformation at the front line of technology.">
+<meta name="twitter:image" content="https://ydm-technology-service.vercel.app/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --bg-soft: #111111;
+    --fg: #F5F5F0;
+    --fg-muted: #7A7A75;
+    --fg-dim: #3A3A38;
+    --accent: #FFFF00;        /* YDM yellow from logo (#ff0) */
+    --accent-dim: #CCCC00;
+    --line: rgba(245,245,240,0.12);
+    --line-strong: rgba(245,245,240,0.28);
+    --font: 'Prompt', system-ui, sans-serif;
+  }
+
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ─── Custom cursor ───────────────────────── */
+  .cursor {
+    position: fixed;
+    top: 0; left: 0;
+    width: 14px; height: 14px;
+    border: 1px solid var(--fg);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%,-50%);
+    transition: width .2s, height .2s, background .2s, border-color .2s;
+    z-index: 9999;
+    mix-blend-mode: difference;
+  }
+  .cursor.hover {
+    width: 48px; height: 48px;
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor { display: none; }
+  }
+
+  /* ─── Shared ───────────────────────── */
+  a { color: inherit; text-decoration: none; cursor: none; }
+  @media (max-width: 768px) { a { cursor: pointer; } }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  .container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  @media (max-width: 768px) {
+    .container { padding: 0 20px; }
+  }
+
+  /* Mono-ish label using Prompt light + letter-spacing */
+  .mono {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  .hr {
+    height: 1px;
+    width: 100%;
+    background: var(--line);
+  }
+
+  /* ─── Nav ───────────────────────── */
+  nav.top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: difference;
+  }
+  nav.top .logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  nav.top .logo-link svg {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+  nav.top .logo-link .divider {
+    width: 1px;
+    height: 18px;
+    background: var(--fg-muted);
+  }
+  nav.top .logo-link .sub {
+    font-family: var(--font);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg);
+  }
+  nav.top .logo-link .sub .slash { color: var(--accent); }
+  nav.top ul {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+  }
+  nav.top ul a {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg);
+    position: relative;
+    padding-bottom: 2px;
+  }
+  nav.top ul a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--fg);
+    transition: width .3s ease;
+  }
+  nav.top ul a:hover::after { width: 100%; }
+  @media (max-width: 768px) {
+    nav.top { padding: 16px 20px; }
+    nav.top .logo-link svg { height: 22px; }
+    nav.top .logo-link .sub { display: none; }
+    nav.top .logo-link .divider { display: none; }
+    nav.top ul { gap: 18px; }
+    nav.top ul li:nth-child(n+3) { display: none; }
+  }
+
+  /* ─── Section scaffolding ───────────────────────── */
+  section {
+    position: relative;
+    padding: 120px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 768px) { section { padding: 80px 0; } }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    margin-bottom: 64px;
+  }
+  .section-head .num {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    padding-top: 8px;
+  }
+  .section-head .label {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  @media (max-width: 768px) {
+    .section-head { grid-template-columns: 50px 1fr; gap: 16px; margin-bottom: 40px; }
+  }
+
+  /* ─── Display type (using Prompt Light) ───────────────────────── */
+  .display {
+    font-family: var(--font);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+  }
+  .display em {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .display strong {
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  /* ─── Hero ───────────────────────── */
+  .hero {
+    min-height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(255,255,0,0.08), transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(255,255,0,0.04), transparent 50%),
+      var(--bg);
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.5;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' /%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  /* Giant ghost logo in hero background */
+  .hero-ghost-logo {
+    position: absolute;
+    right: -10%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 70%;
+    height: auto;
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-top {
+    position: relative;
+    z-index: 2;
+    padding: 120px 32px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: end;
+  }
+  .hero-top .left .mono { display: block; margin-bottom: 8px; }
+  .hero-top .right {
+    text-align: right;
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    line-height: 1.8;
+  }
+  @media (max-width: 768px) {
+    .hero-top { padding: 90px 20px 0; grid-template-columns: 1fr; }
+    .hero-top .right { text-align: left; }
+  }
+
+  .hero-center {
+    position: relative;
+    z-index: 2;
+    padding: 40px 32px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .hero-center h1 {
+    font-size: clamp(56px, 11vw, 180px);
+    font-weight: 700;
+  }
+  .hero-center h1 .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: reveal .9s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .hero-center h1 .line:nth-child(1) { animation-delay: .2s; }
+  .hero-center h1 .line:nth-child(2) { animation-delay: .35s; }
+  .hero-center h1 .line:nth-child(3) { animation-delay: .5s; padding-left: 15%; }
+
+  @keyframes reveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    .hero-center { padding: 20px; }
+    .hero-center h1 .line:nth-child(3) { padding-left: 8%; }
+  }
+
+  .hero-bottom {
+    position: relative;
+    z-index: 2;
+    padding: 0 32px 48px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 32px;
+    align-items: end;
+    border-top: 1px solid var(--line);
+    padding-top: 32px;
+  }
+  .hero-bottom .lead {
+    max-width: 480px;
+    font-family: var(--font);
+    font-size: clamp(18px, 1.6vw, 22px);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+  .hero-bottom .lead em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .hero-bottom .scroll-ind {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--fg-muted);
+  }
+  .hero-bottom .scroll-ind .line-v {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(var(--fg-muted), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+  .hero-bottom .cta {
+    text-align: right;
+  }
+  .hero-bottom .cta a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg);
+    border-bottom: 1px solid var(--fg);
+    padding-bottom: 6px;
+    transition: color .3s, border-color .3s, letter-spacing .3s;
+  }
+  .hero-bottom .cta a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    letter-spacing: 0.26em;
+  }
+  @media (max-width: 768px) {
+    .hero-bottom { grid-template-columns: 1fr; padding: 32px 20px; gap: 24px; }
+    .hero-bottom .cta, .hero-bottom .scroll-ind { text-align: left; align-items: flex-start; }
+  }
+
+  /* ─── Section 02: About & Why ───────────────────────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .about-grid .num { padding-top: 8px; }
+  .about-grid .left h2 {
+    font-size: clamp(36px, 5vw, 72px);
+    margin-bottom: 32px;
+    font-weight: 700;
+  }
+  .about-grid .left p {
+    max-width: 520px;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--fg);
+    margin-bottom: 24px;
+  }
+  .about-grid .left p.lead {
+    font-family: var(--font);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--accent);
+    margin-bottom: 32px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .pillar {
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 24px;
+    transition: background .3s;
+  }
+  .pillar:last-child { border-bottom: 1px solid var(--line); }
+  .pillar:hover {
+    background: linear-gradient(90deg, rgba(255,255,0,0.03), transparent);
+  }
+  .pillar .idx {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    padding-top: 6px;
+  }
+  .pillar h4 {
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+    letter-spacing: 0.015em;
+  }
+  .pillar p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 1024px) {
+    .about-grid { grid-template-columns: 50px 1fr; }
+    .about-grid .right { grid-column: 2 / 3; margin-top: 32px; }
+  }
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 24px; }
+    .about-grid .right { grid-column: auto; }
+  }
+
+  /* ─── Section 03: Services Overview ───────────────────────── */
+  .overview-head h2 {
+    font-size: clamp(48px, 8vw, 120px);
+    margin-bottom: 40px;
+    font-weight: 700;
+  }
+
+  .pillars-big {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .pillar-big {
+    padding: 40px 32px;
+    border-right: 1px solid var(--line);
+    position: relative;
+    transition: background .4s;
+    cursor: none;
+  }
+  .pillar-big:last-child { border-right: none; }
+  .pillar-big::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 0;
+    background: var(--accent);
+    transition: height .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .pillar-big:hover::before { height: 2px; }
+  .pillar-big:hover h3 { color: var(--accent); }
+  .pillar-big .icon {
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 40px;
+    letter-spacing: 0.18em;
+  }
+  .pillar-big h3 {
+    font-family: var(--font);
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    margin-bottom: 20px;
+    transition: color .3s;
+    text-transform: uppercase;
+  }
+  .pillar-big p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.7;
+    max-width: 320px;
+  }
+  .pillar-big .arrow {
+    display: inline-block;
+    margin-top: 32px;
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .pillar-big:hover .arrow { opacity: 1; color: var(--accent); }
+
+  @media (max-width: 900px) {
+    .pillars-big { grid-template-columns: 1fr; }
+    .pillar-big { border-right: none; border-bottom: 1px solid var(--line); }
+    .pillar-big:last-child { border-bottom: none; }
+  }
+
+  /* ─── Solution Sections (04, 05, 06) ───────────────────────── */
+  .solution {
+    padding: 140px 0;
+  }
+
+  .solution-intro {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 80px;
+  }
+  .solution-intro .num { padding-top: 8px; }
+  .solution-intro h2 {
+    font-size: clamp(48px, 8vw, 140px);
+    line-height: 0.95;
+    font-weight: 700;
+  }
+  .solution-intro .desc {
+    padding-top: 12px;
+  }
+  .solution-intro .tagline {
+    font-family: var(--font);
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--accent);
+    margin-bottom: 24px;
+    max-width: 440px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .solution-intro .body {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--fg-muted);
+    max-width: 460px;
+  }
+
+  @media (max-width: 1024px) {
+    .solution-intro { grid-template-columns: 50px 1fr; }
+    .solution-intro .desc { grid-column: 2 / 3; }
+  }
+  @media (max-width: 768px) {
+    .solution-intro { grid-template-columns: 1fr; gap: 20px; }
+    .solution-intro .desc { grid-column: auto; }
+  }
+
+  /* Solution Cards List */
+  .cards {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 48px;
+  }
+  .cards .cards-label {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    padding-top: 24px;
+    line-height: 1.6;
+  }
+  .cards-list {
+    border-top: 1px solid var(--line);
+  }
+  .card-row {
+    display: grid;
+    grid-template-columns: 60px 1.2fr 2fr 40px;
+    gap: 24px;
+    align-items: start;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    transition: padding .3s, background .3s;
+    cursor: none;
+  }
+  .card-row:hover {
+    padding-left: 16px;
+    background: linear-gradient(90deg, rgba(255,255,0,0.04), transparent 60%);
+  }
+  .card-row:hover .card-title {
+    color: var(--accent);
+  }
+  .card-row:hover .arrow-small {
+    transform: translateX(8px);
+    color: var(--accent);
+  }
+  .card-row .card-num {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--fg-muted);
+    letter-spacing: 0.15em;
+    padding-top: 6px;
+  }
+  .card-row .card-title {
+    font-family: var(--font);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.015em;
+    transition: color .3s;
+  }
+  .card-row .card-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.7;
+  }
+  .card-row .arrow-small {
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--fg-dim);
+    text-align: right;
+    transition: transform .3s, color .3s;
+  }
+
+  @media (max-width: 1024px) {
+    .cards { grid-template-columns: 50px 1fr; gap: 20px; }
+    .card-row { grid-template-columns: 40px 1fr; gap: 12px; }
+    .card-row .card-desc {
+      grid-column: 2 / -1;
+      margin-top: 8px;
+    }
+    .card-row .arrow-small { display: none; }
+  }
+  @media (max-width: 768px) {
+    .cards { grid-template-columns: 1fr; }
+    .cards .cards-label { display: none; }
+  }
+
+  /* ─── Works ───────────────────────── */
+  .works-head h2 {
+    font-size: clamp(48px, 8vw, 120px);
+    margin-bottom: 64px;
+    font-weight: 700;
+  }
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+  }
+  .work {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    cursor: none;
+    transition: border-color .3s;
+  }
+  .work:hover { border-color: var(--accent); }
+  .work:nth-child(1) { grid-column: span 7; }
+  .work:nth-child(2) { grid-column: span 5; }
+  .work:nth-child(3) { grid-column: span 4; }
+  .work:nth-child(4) { grid-column: span 4; }
+  .work:nth-child(5) { grid-column: span 4; }
+
+  .work .work-bg {
+    position: absolute;
+    inset: 0;
+    transition: transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .work:hover .work-bg { transform: scale(1.05); }
+
+  .work:nth-child(1) .work-bg {
+    background:
+      radial-gradient(circle at 30% 40%, rgba(255,255,0,0.4), transparent 60%),
+      linear-gradient(135deg, #1a1a1a, #0a0a0a);
+  }
+  .work:nth-child(2) .work-bg {
+    background:
+      radial-gradient(circle at 70% 60%, rgba(255,255,0,0.2), transparent 50%),
+      linear-gradient(45deg, #222, #0a0a0a);
+  }
+  .work:nth-child(3) .work-bg {
+    background:
+      conic-gradient(from 180deg at 50% 50%, #1a1a1a, #0a0a0a, #1a1a1a);
+  }
+  .work:nth-child(4) .work-bg {
+    background:
+      linear-gradient(135deg, rgba(255,255,0,0.15), #0a0a0a 60%);
+  }
+  .work:nth-child(5) .work-bg {
+    background:
+      radial-gradient(ellipse at bottom, rgba(255,255,0,0.1), #0a0a0a);
+  }
+
+  .work .work-meta {
+    position: absolute;
+    inset: 0;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+  }
+  .work .w-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: var(--font);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .work .w-bot h4 {
+    font-family: var(--font);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .work .w-bot .w-client {
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  @media (max-width: 1024px) {
+    .work:nth-child(n) { grid-column: span 6; }
+  }
+  @media (max-width: 768px) {
+    .works-grid { grid-template-columns: 1fr; }
+    .work:nth-child(n) { grid-column: span 1; }
+  }
+
+  /* ─── Partners ───────────────────────── */
+  .partners-grid {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .partners-grid .num { padding-top: 8px; }
+  .partners-grid h2 {
+    font-size: clamp(36px, 5vw, 64px);
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+  .partners-grid p {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 48px;
+  }
+
+  .logos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .logo-cell {
+    padding: 40px 24px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--fg-muted);
+    transition: color .3s, background .3s;
+    cursor: none;
+    text-transform: uppercase;
+  }
+  .logo-cell:hover {
+    color: var(--accent);
+    background: rgba(255,255,0,0.03);
+  }
+
+  @media (max-width: 1024px) {
+    .partners-grid { grid-template-columns: 50px 1fr; }
+  }
+  @media (max-width: 768px) {
+    .partners-grid { grid-template-columns: 1fr; }
+    .logos { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ─── Contact ───────────────────────── */
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 48px;
+  }
+  .contact-wrap .num { padding-top: 8px; }
+  .contact-wrap .left h2 {
+    font-size: clamp(48px, 7vw, 100px);
+    margin-bottom: 32px;
+    font-weight: 700;
+  }
+  .contact-wrap .left p {
+    font-family: var(--font);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--fg-muted);
+    max-width: 420px;
+    margin-bottom: 48px;
+  }
+  .contact-wrap .left .contact-info {
+    border-top: 1px solid var(--line);
+    padding-top: 32px;
+  }
+  .contact-wrap .left .contact-info > div {
+    margin-bottom: 20px;
+  }
+  .contact-wrap .left .contact-info .label {
+    font-family: var(--font);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-bottom: 4px;
+  }
+  .contact-wrap .left .contact-info .value {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--fg);
+  }
+  .contact-wrap .left .contact-info a:hover {
+    color: var(--accent);
+  }
+
+  /* Form */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .field .flabel {
+    font-family: var(--font);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .field .flabel .req { color: var(--accent); }
+  .field input,
+  .field textarea,
+  .field select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0;
+    color: var(--fg);
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: 300;
+    transition: border-color .3s;
+    outline: none;
+    cursor: none;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: var(--fg-dim);
+    font-weight: 300;
+  }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    border-color: var(--accent);
+  }
+  .field textarea { resize: vertical; min-height: 60px; }
+  .field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23F5F5F0' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 28px;
+  }
+  .field select option {
+    background: var(--bg);
+    color: var(--fg);
+  }
+
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .check {
+    position: relative;
+    cursor: none;
+  }
+  .check input { display: none; }
+  .check label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    transition: all .3s;
+    cursor: none;
+  }
+  .check label::before {
+    content: '';
+    width: 10px; height: 10px;
+    border: 1px solid var(--fg-muted);
+    transition: all .3s;
+  }
+  .check input:checked + label {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .check input:checked + label::before {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .check label:hover {
+    border-color: var(--line-strong);
+    color: var(--fg);
+  }
+
+  button[type="submit"] {
+    margin-top: 16px;
+    background: transparent;
+    border: 1px solid var(--fg);
+    color: var(--fg);
+    padding: 22px 32px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all .3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  button[type="submit"]:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    letter-spacing: 0.34em;
+  }
+
+  @media (max-width: 1024px) {
+    .contact-wrap { grid-template-columns: 50px 1fr; }
+    .contact-wrap .right { grid-column: 2 / 3; margin-top: 48px; }
+  }
+  @media (max-width: 768px) {
+    .contact-wrap { grid-template-columns: 1fr; }
+    .contact-wrap .right { grid-column: auto; margin-top: 24px; }
+    .checkbox-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── Footer ───────────────────────── */
+  footer {
+    padding: 48px 0 32px;
+    border-top: 1px solid var(--line);
+    font-family: var(--font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 32px;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  .footer-top .center-mark svg {
+    height: 40px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .footer-bot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+  .footer-bot .back-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-bot .back-top:hover { color: var(--accent); }
+
+  @media (max-width: 768px) {
+    .footer-top { grid-template-columns: 1fr; text-align: center; }
+    .footer-bot { flex-direction: column; gap: 12px; }
+  }
+
+  /* ─── Marquee ───────────────────────── */
+  .marquee {
+    overflow: hidden;
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+    background: var(--bg);
+  }
+  .marquee-track {
+    display: inline-flex;
+    gap: 48px;
+    align-items: center;
+    animation: marquee 40s linear infinite;
+    font-family: var(--font);
+    font-style: normal;
+    font-size: clamp(48px, 8vw, 120px);
+    line-height: 1;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  .marquee-track .slash { color: var(--accent); padding: 0 24px; font-weight: 700; }
+  .marquee-track svg {
+    height: clamp(40px, 7vw, 100px);
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 24px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Inline logo for reuse via <use> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="ydm-logo" viewBox="0 0 620.07 240.36">
+      <path fill="currentColor" d="M313.83.2v62.59c0,.15-.17.25-.31.17-9.24-5.36-19.83-8.6-31.13-9.03-.86-.03-1.73-.05-2.6-.05-9.22,0-18,1.86-26.02,5.23v-3.28c0-.13-.12-.23-.25-.2-10.79,2.52-20.6,7.64-28.76,14.68v-10.73c0-.14-.15-.24-.28-.19-18.6,8.06-32.94,24.29-38.66,44.24-.06.22-.39.18-.39-.05v-17.3c0-.2-.27-.28-.38-.11-6.61,10.65-10.44,23.27-10.44,36.79s3.83,26.14,10.44,36.79c.11.17.38.09.38-.11v-17.3c0-.23.32-.27.39-.05,5.72,19.95,20.06,36.18,38.66,44.24.13.06.28-.04.28-.19v-10.3c0-.17.2-.26.32-.15,8.09,6.9,17.78,11.92,28.43,14.4.13.03.25-.07.25-.2v-2.98c0-.14.14-.24.27-.18,7.94,3.3,16.64,5.12,25.75,5.12,37.59,0,68.07-30.93,68.07-69.09,0-.02,0-.04,0-.06,0-1.08,0-117.33,0-122.71,0-.11-.09-.19-.2-.19h-33.64c-.11,0-.2.09-.2.2ZM224.77,143.93c0,.19-.25.28-.36.13-4.46-5.83-7.12-13.14-7.12-21.09s2.66-15.27,7.12-21.09c.12-.15.36-.07.36.13v41.93ZM306.68,143.94c-.51.67-1.04,1.32-1.6,1.96-.09.1-.17.2-.26.29-6.2,6.88-15.12,11.2-25.03,11.2s-19.46-4.63-25.68-11.94c-.12-.14-.35-.06-.35.13v7.9c0,.15-.16.25-.3.18-11.01-5.69-18.55-17.29-18.55-30.69s7.54-25,18.55-30.69c.13-.07.3.03.3.18v7.9c0,.19.23.27.35.13.54-.64,1.11-1.26,1.7-1.86.86-.88,1.78-1.7,2.73-2.48.42-.35.86-.68,1.3-1.01,5.6-4.14,12.49-6.59,19.95-6.59,18.73,0,33.91,15.41,33.91,34.42,0,7.9-2.63,15.17-7.03,20.97Z"/>
+      <path fill="currentColor" d="M620.07,112.31c-.05-58.46-46.7-56.15-46.7-56.15-20.61,0-37.02,8.78-48.25,20.2-.12.13-.34.04-.34-.14v-17.84c0-.13-.13-.23-.25-.2-9.7,2.53-18.71,7.31-25.37,13.73-.08.07-.2.07-.28,0-10.08-9.75-22.04-15.75-37.19-15.75-20.55,0-36.93,8.73-48.16,20.11-.12.13-.34.04-.34-.14v-18.03c-5.99,1.62-11.57,4.19-16.59,7.55v-9.05c0-.11-.09-.2-.2-.2h-33.67c-.11,0-.2.09-.2.2v134.36c0,.11.09.2.2.2h33.67c.11,0,.2-.08.2-.19,0-4.38.11-81.89.11-82.32,0-8.37,7.1-15.24,15.61-17.56.13-.03.26.06.26.2v99.68c0,.11.09.2.2.2h17.55c.11,0,.2-.08.2-.19,0-4.36-.05-81.13-.07-82.32,0-10.34,10.82-18.41,21.76-18.41,12.19,0,22.07,9.88,22.07,22.07l.02,78.66c0,.11.09.2.2.2h33.67c.11,0,.2-.09.2-.2l.02-78.66c0-9.93,6.57-18.31,15.59-21.08.13-.04.26.06.26.2l-.03,99.54c0,.11.09.2.2.2h17.58c.11,0,.2-.08.2-.19,0-4.36-.05-81.36-.06-82.32,0-10.34,10.82-18.41,21.76-18.41,12.19,0,22.07,9.88,22.07,22.07l.02,78.66c0,.11.09.2.2.2h33.69c.11,0,.2-.09.2-.2v-78.66Z"/>
+      <path fill="currentColor" d="M46.3,240.36h24.64c.11,0,.2-.09.2-.2v-58.91c0-.22-.3-.28-.38-.08l-24.64,58.91c-.06.13.04.28.18.28Z"/>
+      <path fill="currentColor" d="M.38,206.32l14.87-35.91s.02-.1,0-.15L.39,132.94c-.08-.2-.39-.15-.39.07v73.23c0,.22.3.28.38.08Z"/>
+      <path fill="currentColor" d="M18.38,240.36h24.64c.11,0,.2-.09.2-.2v-58.91c0-.22-.3-.28-.38-.08l-24.64,58.91c-.06.13.04.28.18.28Z"/>
+      <path fill="currentColor" d="M184.2,56.17h-36.36c-.08,0-.15.05-.18.12l-28.97,69.29c-.07.16-.3.16-.37,0l-28.99-69.31c-.03-.07-.1-.12-.18-.12h-17.81c-.11,0-.2.09-.2.2v14.44c0,.22-.3.28-.38.08l-6.1-14.59c-.03-.07-.1-.12-.18-.12h-21.07c-.11,0-.2.09-.2.2v14.41c0,.22-.3.28-.38.08l-6.09-14.56c-.03-.07-.1-.12-.18-.12H.2c-.14,0-.24.15-.18.28l42.81,102.64c.08.2.38.14.38-.08v-64.96c0-.22.3-.28.38-.08l27.16,65.11c.08.2.38.14.38-.08v-57.18c0-.22.3-.28.38-.08l28.5,68.33s.02.1,0,.15l-29.22,69.87c-.06.13.04.28.18.28h36.48c.08,0,.15-.05.18-.12L184.38,56.45c.05-.13-.04-.28-.18-.28Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav class="top">
+  <a href="#top" class="logo-link" aria-label="YDM Technology Services">
+    <svg style="color: var(--accent);"><use href="#ydm-logo"/></svg>
+    <span class="divider"></span>
+    <span class="sub">TECHNOLOGY<span class="slash"> :/ </span>SERVICES</span>
+  </a>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-bg"></div>
+  <svg class="hero-ghost-logo" style="color: var(--accent);"><use href="#ydm-logo"/></svg>
+
+  <div class="hero-top">
+    <div class="left">
+      <span class="mono">YDM :/ Technology Services</span>
+      <span class="mono">Bangkok, Thailand ⟶ Global</span>
+    </div>
+    <div class="right">
+      (001)&nbsp;—&nbsp;A DIGITAL<br/>
+      TRANSFORMATION STUDIO<br/>
+      EST. <span style="color: var(--accent);">UNSTOPPABLE</span>
+    </div>
+  </div>
+
+  <div class="hero-center">
+    <h1 class="display">
+      <span class="line">We build.</span>
+      <span class="line">We connect.</span>
+      <span class="line"><em>We scale.</em></span>
+    </h1>
+  </div>
+
+  <div class="hero-bottom">
+    <p class="lead">
+      YDM Technology Services is a <em>transformation agent</em> on the front line of technology — combining technical strategy with deep platform expertise.
+    </p>
+    <div class="scroll-ind">
+      <span>SCROLL</span>
+      <div class="line-v"></div>
+      <span>:/</span>
+    </div>
+    <div class="cta">
+      <a href="#contact">Start a project →</a>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>MAKE IT UNSTOPPABLE</span>
+    <svg style="color: var(--accent);"><use href="#ydm-logo"/></svg>
+    <span>MAKE IT UNSTOPPABLE</span>
+    <svg style="color: var(--accent);"><use href="#ydm-logo"/></svg>
+    <span>MAKE IT UNSTOPPABLE</span>
+    <svg style="color: var(--accent);"><use href="#ydm-logo"/></svg>
+    <span>MAKE IT UNSTOPPABLE</span>
+    <svg style="color: var(--accent);"><use href="#ydm-logo"/></svg>
+  </div>
+</div>
+
+<!-- 02 ABOUT & WHY -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="num">02</div>
+      <div class="left">
+        <div class="mono" style="margin-bottom: 32px;">— Our Identity</div>
+        <h2 class="display">
+          Technology that fits<br/>
+          <em>the plan.</em>
+        </h2>
+        <p class="lead">
+          Not the other way around.
+        </p>
+        <p>
+          We believe technology should serve business goals — not dictate them. YDM Technology Services helps brands design, build, and scale digital solutions that actually work in the real world.
+        </p>
+        <p>
+          From enterprise platforms to AI-powered systems, we combine engineering expertise with marketing intelligence to deliver solutions that are not just innovative, but impactful.
+        </p>
+      </div>
+      <div class="right">
+        <div class="mono" style="margin-bottom: 32px;">— Built To Be Unstoppable</div>
+        <div class="pillars">
+          <div class="pillar">
+            <div class="idx">(01)</div>
+            <div>
+              <h4>Business-First Engineering</h4>
+              <p>We don't build tech for tech's sake. Every solution starts with your business goals, shaped by real-world constraints, and measured by outcomes that matter.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="idx">(02)</div>
+            <div>
+              <h4>Connected by Design</h4>
+              <p>Our platforms integrate seamlessly with CRM, CDP, analytics, and MarTech from leading global partners — never locked into patchwork systems.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="idx">(03)</div>
+            <div>
+              <h4>End-to-End Partnership</h4>
+              <p>From consultation and audit, to deployment and ongoing optimization — we stay with you at every stage of the journey.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 SERVICES OVERVIEW -->
+<section id="services">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">03</div>
+      <div class="label">— Expertise / From Vision to System</div>
+    </div>
+    <div class="overview-head">
+      <h2 class="display">
+        Expert-led services,<br/>
+        built for <em>impact.</em>
+      </h2>
+    </div>
+    <div class="pillars-big">
+      <a href="#data" class="pillar-big">
+        <div class="icon">01 / DATA</div>
+        <h3>Data &amp; MarTech</h3>
+        <p>From scattered data to strategic growth. Everything connected, everything measured.</p>
+        <span class="arrow">Explore →</span>
+      </a>
+      <a href="#ai" class="pillar-big">
+        <div class="icon">02 / AI</div>
+        <h3>AI &amp; Automation</h3>
+        <p>Responsible, real, and built to move brands forward — with humans at the center.</p>
+        <span class="arrow">Explore →</span>
+      </a>
+      <a href="#web" class="pillar-big">
+        <div class="icon">03 / BUILD</div>
+        <h3>Web &amp; App</h3>
+        <p>Digital platforms built to support business, not just brand presence.</p>
+        <span class="arrow">Explore →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 04 DATA & MARTECH -->
+<section class="solution" id="data">
+  <div class="container">
+    <div class="solution-intro">
+      <div class="num">04</div>
+      <div>
+        <div class="mono" style="margin-bottom: 24px;">— Solution 01</div>
+        <h2 class="display">Data &amp;<br/><em>MarTech.</em></h2>
+      </div>
+      <div class="desc">
+        <p class="tagline">From scattered data to strategic growth. Everything connected, everything measured.</p>
+        <p class="body">
+          Customer data is everywhere — but turning it into value is what separates active businesses from adaptive ones. We help teams connect data across platforms, campaigns, and departments so it's not just stored, but usable. From CDP and CRM setup to analytics platforms like Google Cloud, Looker, Adobe, and IGAWorks Dfinery — we design MarTech stacks that fit how your team actually works.
+        </p>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="cards-label">Capabilities<br/>(09)</div>
+      <div class="cards-list">
+        <a class="card-row" href="#contact">
+          <div class="card-num">/01</div>
+          <h4 class="card-title">AI Total Solutions</h4>
+          <p class="card-desc">End-to-end solution that connects data, tools, and AI — designed around your business use case.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/02</div>
+          <h4 class="card-title">MarTech Integration &amp; Implementation</h4>
+          <p class="card-desc">Choose the right marketing tools, connect them with your data, and implement them seamlessly.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/03</div>
+          <h4 class="card-title">CDP Setup &amp; Implementation</h4>
+          <p class="card-desc">Build a centralized customer data platform that unifies and activates data across channels.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/04</div>
+          <h4 class="card-title">CRM Setup &amp; Implementation</h4>
+          <p class="card-desc">Set up or upgrade your CRM with automation and integration built in.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/05</div>
+          <h4 class="card-title">Data Collection &amp; Management</h4>
+          <p class="card-desc">Collect and organize data the right way from the start with future-ready structures.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/06</div>
+          <h4 class="card-title">AI-Powered Insights &amp; Enhancement</h4>
+          <p class="card-desc">Use AI to analyze behavior, predict trends, and unlock new opportunities.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/07</div>
+          <h4 class="card-title">Automation &amp; Workflow Design</h4>
+          <p class="card-desc">Design AI-assisted workflows that reduce manual work and speed up operations.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/08</div>
+          <h4 class="card-title">Audience Intelligence &amp; Activation</h4>
+          <p class="card-desc">Activate campaigns based on real behavior, predictive signals, and real-time triggers.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/09</div>
+          <h4 class="card-title">Performance Measurement Systems</h4>
+          <p class="card-desc">Set up MMM, attribution, and test-and-learn frameworks to measure what truly matters.</p>
+          <span class="arrow-small">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 AI & AUTOMATION -->
+<section class="solution" id="ai">
+  <div class="container">
+    <div class="solution-intro">
+      <div class="num">05</div>
+      <div>
+        <div class="mono" style="margin-bottom: 24px;">— Solution 02</div>
+        <h2 class="display">AI &amp;<br/><em>Automation.</em></h2>
+      </div>
+      <div class="desc">
+        <p class="tagline">Creative use of AI that's responsible, real, and built to move brands forward.</p>
+        <p class="body">
+          AI isn't just a trend — it's a shift that's changing how people live, how businesses move, and how we all need to think. While others wait and watch, we're already applying AI to real work. Our approach is built to enhance creativity, not replace it — humans remain at the center, thinking, choosing, and leading.
+        </p>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="cards-label">Capabilities<br/>(07)</div>
+      <div class="cards-list">
+        <a class="card-row" href="#contact">
+          <div class="card-num">/01</div>
+          <h4 class="card-title">Media Intelligence Engine</h4>
+          <p class="card-desc">Pair AI with MMM to forecast, optimize, and scale media in real time.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/02</div>
+          <h4 class="card-title">Celebro — AI Influencer Platform</h4>
+          <p class="card-desc">Uncover market gaps, analyze competitors, and match the right voice to your campaign.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/03</div>
+          <h4 class="card-title">Creative AI Lab</h4>
+          <p class="card-desc">Turn big ideas into high-impact assets. Remix old footage or create brand-new visuals at scale.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/04</div>
+          <h4 class="card-title">ContentPulse — AI for Social Speed</h4>
+          <p class="card-desc">Generate ideas, spot rising trends, and build content that lands fast.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/05</div>
+          <h4 class="card-title">AI Automation Engine</h4>
+          <p class="card-desc">Connect platforms, unify data, and build smart AI-powered workflows across systems.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/06</div>
+          <h4 class="card-title">AI-Powered Personalization</h4>
+          <p class="card-desc">Personalize content, offers, and journeys at scale — driven by unified data.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/07</div>
+          <h4 class="card-title">CRM &amp; Lifecycle Automation</h4>
+          <p class="card-desc">Design CRM systems that fuel retention and automate customer journeys.</p>
+          <span class="arrow-small">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 WEB & APP -->
+<section class="solution" id="web">
+  <div class="container">
+    <div class="solution-intro">
+      <div class="num">06</div>
+      <div>
+        <div class="mono" style="margin-bottom: 24px;">— Solution 03</div>
+        <h2 class="display">Web &amp;<br/><em>App.</em></h2>
+      </div>
+      <div class="desc">
+        <p class="tagline">Digital platforms built to support business, not just brand presence.</p>
+        <p class="body">
+          Websites today do far more than show information — they drive action, automate work, and become the core of how businesses operate. From corporate sites to e-commerce platforms, affiliate systems to ERP solutions, we develop platforms structured to scale — integrating seamlessly with CRM, CDP, analytics, and MarTech tools.
+        </p>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="cards-label">Capabilities<br/>(06)</div>
+      <div class="cards-list">
+        <a class="card-row" href="#contact">
+          <div class="card-num">/01</div>
+          <h4 class="card-title">Custom Website Development</h4>
+          <p class="card-desc">Design and build websites that reflect your brand and deliver business outcomes.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/02</div>
+          <h4 class="card-title">Business Platform Solutions</h4>
+          <p class="card-desc">Tools that match how each business runs — from hotels to clinics to retail.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/03</div>
+          <h4 class="card-title">E-commerce &amp; Affiliate Systems</h4>
+          <p class="card-desc">Tailored platforms for your products, sales structure, and marketing needs.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/04</div>
+          <h4 class="card-title">Enterprise Systems &amp; ERP Integration</h4>
+          <p class="card-desc">Build or upgrade core systems with custom ERP and business solutions.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/05</div>
+          <h4 class="card-title">Web &amp; App Integration Services</h4>
+          <p class="card-desc">Connect your web or app with CRM, CDP, analytics, and MarTech tools.</p>
+          <span class="arrow-small">→</span>
+        </a>
+        <a class="card-row" href="#contact">
+          <div class="card-num">/06</div>
+          <h4 class="card-title">Mobile App Development</h4>
+          <p class="card-desc">Seamless mobile experiences — brand apps, booking tools, loyalty, and more.</p>
+          <span class="arrow-small">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 WORK -->
+<section id="work">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">07</div>
+      <div class="label">— Selected Work / In Motion</div>
+    </div>
+    <div class="works-head">
+      <h2 class="display">
+        Tech meets <em>craft.</em>
+      </h2>
+    </div>
+    <div class="works-grid">
+      <a href="#" class="work">
+        <div class="work-bg"></div>
+        <div class="work-meta">
+          <div class="w-top">
+            <span>Featured / 001</span>
+            <span>2025</span>
+          </div>
+          <div class="w-bot">
+            <h4>Gambol — Dare To Step</h4>
+            <div class="w-client">Client: Gambol&nbsp;&nbsp;·&nbsp;&nbsp;Type: Creative + Platform</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="work">
+        <div class="work-bg"></div>
+        <div class="work-meta">
+          <div class="w-top">
+            <span>002</span>
+            <span>2025</span>
+          </div>
+          <div class="w-bot">
+            <h4>Grab — The Missing</h4>
+            <div class="w-client">Client: Grab&nbsp;&nbsp;·&nbsp;&nbsp;Type: Data + Campaign</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="work">
+        <div class="work-bg"></div>
+        <div class="work-meta">
+          <div class="w-top">
+            <span>003</span>
+            <span>2024</span>
+          </div>
+          <div class="w-bot">
+            <h4>Buscape</h4>
+            <div class="w-client">Type: Platform</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="work">
+        <div class="work-bg"></div>
+        <div class="work-meta">
+          <div class="w-top">
+            <span>004</span>
+            <span>2024</span>
+          </div>
+          <div class="w-bot">
+            <h4>Looker BI</h4>
+            <div class="w-client">Type: Data Platform</div>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="work">
+        <div class="work-bg"></div>
+        <div class="work-meta">
+          <div class="w-top">
+            <span>005</span>
+            <span>2024</span>
+          </div>
+          <div class="w-bot">
+            <h4>Meta Awards Case</h4>
+            <div class="w-client">Type: AI + Media</div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 08 PARTNERS -->
+<section id="partners">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">08</div>
+      <div class="label">— Ecosystem / Partners</div>
+    </div>
+    <div class="partners-grid">
+      <div></div>
+      <div>
+        <h2 class="display">
+          Powered by <em>world-class</em> partners.
+        </h2>
+        <p>
+          We work with leading platforms — tailoring each solution to your real-world setup. No vendor lock-in, just the right tool for the job.
+        </p>
+        <div class="logos">
+          <div class="logo-cell">Google Cloud</div>
+          <div class="logo-cell">Looker</div>
+          <div class="logo-cell">Adobe</div>
+          <div class="logo-cell">IGAWorks</div>
+          <div class="logo-cell">Meta</div>
+          <div class="logo-cell">AWS</div>
+          <div class="logo-cell">Salesforce</div>
+          <div class="logo-cell">Shopify</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">09</div>
+      <div class="label">— Start a Project / Get in Touch</div>
+    </div>
+
+    <div class="contact-wrap">
+      <div></div>
+      <div class="left">
+        <h2 class="display">
+          How can we help<br/>you <em>innovate?</em>
+        </h2>
+        <p>
+          Tell us about your project. Whether you're starting from scratch or scaling fast — let's build what's next, together.
+        </p>
+        <div class="contact-info">
+          <div>
+            <div class="label">Email</div>
+            <div class="value"><a href="mailto:hello@ydmthailand.com">hello@ydmthailand.com</a></div>
+          </div>
+          <div>
+            <div class="label">Location</div>
+            <div class="value">Bangkok, Thailand</div>
+          </div>
+          <div>
+            <div class="label">Instagram</div>
+            <div class="value"><a href="#">@ydmthailand</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <form onsubmit="event.preventDefault(); alert('Thanks! We will get back to you shortly.');">
+          <div class="field">
+            <div class="flabel">Full Name <span class="req">*</span></div>
+            <input type="text" required placeholder="Your name">
+          </div>
+          <div class="field">
+            <div class="flabel">Company <span class="req">*</span></div>
+            <input type="text" required placeholder="Company name">
+          </div>
+          <div class="field">
+            <div class="flabel">Email <span class="req">*</span></div>
+            <input type="email" required placeholder="you@company.com">
+          </div>
+          <div class="field">
+            <div class="flabel">Phone <span class="req">*</span></div>
+            <input type="tel" required placeholder="+66 ...">
+          </div>
+
+          <div class="field">
+            <div class="flabel">Service of Interest <span class="req">*</span></div>
+            <div class="checkbox-grid">
+              <div class="check">
+                <input type="checkbox" id="s1" name="svc">
+                <label for="s1">Data &amp; MarTech</label>
+              </div>
+              <div class="check">
+                <input type="checkbox" id="s2" name="svc">
+                <label for="s2">AI &amp; Automation</label>
+              </div>
+              <div class="check">
+                <input type="checkbox" id="s3" name="svc">
+                <label for="s3">Web &amp; App</label>
+              </div>
+              <div class="check">
+                <input type="checkbox" id="s4" name="svc">
+                <label for="s4">Not sure / Consult</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="flabel">Estimated Budget <span class="req">*</span></div>
+            <select required>
+              <option value="">Select budget range</option>
+              <option>Under 100,000 THB</option>
+              <option>100,000 – 500,000 THB</option>
+              <option>500,000 – 1,000,000 THB</option>
+              <option>1,000,000 – 3,000,000 THB</option>
+              <option>Over 3,000,000 THB</option>
+              <option>Not sure — let's discuss</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="flabel">Project Details</div>
+            <textarea rows="3" placeholder="Tell us what you're working on..."></textarea>
+          </div>
+
+          <button type="submit">
+            <span>Send Message</span>
+            <span>:/ →</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>YDM :/ TECHNOLOGY SERVICES<br/>BANGKOK, TH</div>
+      <div class="center-mark">
+        <svg style="color: var(--accent);"><use href="#ydm-logo"/></svg>
+      </div>
+      <div style="text-align: right;">MAKE IT UNSTOPPABLE<br/>© 2026</div>
+    </div>
+    <div class="footer-bot">
+      <div>All rights reserved</div>
+      <a href="#top" class="back-top">↑ Back to top</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  let mouseX = 0, mouseY = 0;
+  let cursorX = 0, cursorY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animateCursor() {
+    cursorX += (mouseX - cursorX) * 0.2;
+    cursorY += (mouseY - cursorY) * 0.2;
+    cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%,-50%)`;
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Hover effect on interactive elements
+  const hoverables = document.querySelectorAll('a, button, .card-row, .pillar-big, .work, .logo-cell, input, textarea, select, label');
+  hoverables.forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  // Scroll-triggered reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(s => {
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(30px)';
+    s.style.transition = 'opacity .8s ease, transform .8s ease';
+    observer.observe(s);
+  });
+</script>
+
+</body>
+</html>
