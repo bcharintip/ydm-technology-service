@@ -5,3 +5,10 @@ node_modules/
 .env
 .env.local
 .omc/
+
+# Local source material (see CLAUDE.md)
+YDM-LOGO.svg
+*.docx
+ref-*.mov
+ydmspecial 2.ttf
+arrow.svg
