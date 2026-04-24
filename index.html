@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>YDM Technology Services — Transformation at the Front Line of Technology</title>
 <meta name="description" content="YDM Technology Service — transformation partner at the front line of technology. Enterprise platforms, data, and AI engineering.">
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#000">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="canonical" href="https://ydm-technology-service.vercel.app/">
 
@@ -35,7 +35,7 @@
   }
 
   :root {
-    --bg: #0A0A0A;
+    --bg: #000;
     --bg-soft: #111111;
     --fg: #F5F5F0;
     --fg-muted: #F5F5F0;
@@ -51,14 +51,12 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-  }
-  @media (max-width: 768px) {
-    html { scroll-snap-type: y proximity; }
+    scroll-snap-type: y proximity;
+    background: var(--bg);
   }
 
   body {
-    background: var(--bg);
+    background: transparent;
     color: var(--fg);
     font-family: var(--font);
     font-weight: 300;
@@ -136,10 +134,8 @@
     transition: background .3s ease, backdrop-filter .3s ease, border-color .3s ease, padding .3s ease;
   }
   nav.top.scrolled {
-    background: rgba(10,10,10,0.9);
-    backdrop-filter: blur(12px) saturate(140%);
-    -webkit-backdrop-filter: blur(12px) saturate(140%);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: transparent;
+    border-bottom: 1px solid transparent;
   }
   nav.top .logo-link {
     display: inline-flex;
@@ -200,7 +196,7 @@
   nav.top ul a.cta {
     padding: 12px 20px;
     background: var(--accent);
-    color: #0A0A0A;
+    color: #000;
     font-weight: 500;
     transition: transform .2s ease, background .2s ease;
   }
@@ -250,7 +246,7 @@
   }
   .section-head .num {
     font-family: var(--font);
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 500;
     letter-spacing: 0.22em;
     color: var(--accent);
@@ -308,19 +304,13 @@
     scroll-snap-stop: normal;
   }
 
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: #000;
-  }
-
   .hero-ascii {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
     display: block;
     pointer-events: none;
   }
@@ -595,6 +585,15 @@
     color: var(--fg-muted);
     text-transform: uppercase;
   }
+  .media-placeholder.has-video { border: none; background: #000; }
+  .media-placeholder.has-video::before { display: none; }
+  .media-placeholder .placeholder-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   @media (max-width: 1200px) {
     .about-grid { gap: 80px; }
@@ -613,6 +612,25 @@
     flex-direction: column;
     gap: 48px;
   }
+  /* Solution sub-sections with video backgrounds */
+  .solution { overflow: hidden; }
+  .solution .section-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .solution .section-bg {
+    background:
+      linear-gradient(rgba(10,10,10,0.55), rgba(10,10,10,0.75)),
+      radial-gradient(ellipse at 80% 10%, rgba(255,255,0,0.05), transparent 55%);
+    z-index: 1;
+  }
+  #services .section-bg::before,
+  .solution .section-bg::before { display: none; }
   .overview-head {
     text-align: center;
     margin: auto 0;
@@ -649,8 +667,8 @@
     opacity: 0.3;
     mask-image: radial-gradient(ellipse at center, #000 40%, transparent 80%);
   }
-  #services .container,
-  .solution .container { position: relative; z-index: 1; }
+  #services .container { position: relative; z-index: 1; }
+  .solution .container { position: relative; z-index: 2; }
 
   .pillars-big {
     display: grid;
@@ -782,10 +800,10 @@
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--fg-muted);
-    line-height: 1.6;
+    line-height: 4;
   }
   .cards-list {
-    border-top: 1px solid var(--line);
+    border-top: 0 solid var(--line);
   }
   .card-row {
     display: grid;
@@ -998,7 +1016,20 @@
     flex-direction: column;
     gap: 32px;
   }
-  #contact form { margin-top: 56px; }
+  #contact form { margin-top: 0; position: relative; z-index: 1; }
+
+  /* Solid black contact panel */
+  .contact-wrap .right {
+    position: relative;
+    padding: 64px;
+    border-radius: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #000;
+    isolation: isolate;
+  }
+  @media (max-width: 768px) {
+    .contact-wrap .right { padding: 32px 24px; }
+  }
 
   .field-row {
     display: grid;
@@ -1209,7 +1240,7 @@
     align-self: flex-start;
     background: var(--accent);
     border: none;
-    color: #0A0A0A;
+    color: #000;
     padding: 12px 24px;
     font-family: var(--font);
     font-size: 13px;
@@ -1332,7 +1363,7 @@
     overflow: hidden;
     padding: 24px 0;
     white-space: nowrap;
-    background: var(--bg);
+    background: transparent;
   }
   .marquee-track {
     display: inline-flex;
@@ -1382,26 +1413,12 @@
                 background .2s, border-color .2s;
   }
 
-  /* Solution cards — inline collapsed, expand from bottom pushing intro up */
+  /* Solution cards — always visible; reveal animation handled per card-row */
   .solution .cards {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
     margin-top: 0;
-    pointer-events: none;
-    transition:
-      max-height .55s cubic-bezier(.2,.8,.2,1),
-      opacity .35s ease,
-      margin-top .4s ease;
-  }
-  .solution .cards.open {
-    max-height: 80vh;
-    opacity: 1;
-    margin-top: 56px;
-    pointer-events: auto;
   }
   .solution .cards-label {
     font-family: var(--font);
@@ -1412,18 +1429,16 @@
     text-transform: uppercase;
   }
 
-  /* Horizontal card columns (slide left / horizontal scroll) */
+  /* Horizontal card columns (slide left / scroll-linked) */
   .solution .cards-list {
     display: flex;
     flex-direction: row;
-    gap: 0;
+    gap: 16px;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    margin: 0 -32px;
-    padding: 0 32px;
+    margin: 0;
+    padding: 0 40px 0 0;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--line-strong) transparent;
@@ -1435,16 +1450,20 @@
     display: flex;
     flex-direction: column;
     flex: 0 0 320px;
-    padding: 40px 28px;
-    border: none;
-    border-right: 1px solid var(--line);
-    gap: 16px;
+    padding: 24px 24px;
+    border: 1px solid var(--line);
+    gap: 12px;
     scroll-snap-align: start;
     position: relative;
-    transition: background .3s, padding .3s;
+    transition: background .3s, padding .3s, border-color .3s;
     cursor: none;
   }
-  .solution .card-row:last-child { border-right: none; }
+  .solution .card-row:hover {
+    border-color: rgba(255,255,0,0.35);
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+  }
   .solution .card-row::before {
     content: '';
     position: absolute;
@@ -1477,15 +1496,89 @@
     line-height: 1.6;
     max-width: none;
   }
-  .solution .card-row .arrow-small {
-    margin-top: auto;
-    align-self: flex-start;
-    font-size: 14px;
-    color: var(--fg-muted);
-    transition: color .3s, transform .3s;
-  }
+  .solution .card-row .arrow-small { display: none; }
   @media (max-width: 768px) {
     .solution .card-row { flex-basis: 280px; padding: 32px 22px; }
+  }
+
+  /* ─── Sticky pin + scroll-linked horizontal cards ─────────── */
+  .solution-pin { position: relative; }
+  .solution-pin > .solution {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    scroll-snap-align: none;
+    opacity: 1;
+    transform: none;
+  }
+  .solution-pin > .solution .container {
+    padding-top: 100px;
+    padding-bottom: 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 32px;
+  }
+  .solution-pin .cards-list {
+    overflow: visible !important;
+    scroll-snap-type: none !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    will-change: transform;
+    width: max-content;
+  }
+  .solution-pin .cards-list::-webkit-scrollbar { display: none; }
+  .solution-pin .solution-intro,
+  .solution-pin .cards {
+    transform: translateY(60px);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(.2,.8,.2,1), opacity 0.6s ease;
+  }
+  .solution-pin > .solution.cards-revealed .solution-intro,
+  .solution-pin > .solution.cards-revealed .cards {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .solution-pin .card-row {
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform 0.7s cubic-bezier(.2,.8,.2,1), opacity 0.5s ease;
+    transition-delay: calc(0.2s + var(--idx, 0) * 0.1s);
+    scroll-snap-align: none;
+  }
+  .solution-pin > .solution.cards-revealed .card-row {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  @media (max-width: 768px) {
+    .solution-pin { height: auto !important; }
+    .solution-pin > .solution {
+      position: relative;
+      top: auto;
+      height: auto;
+      min-height: 100vh;
+      padding: 80px 0;
+    }
+    .solution-pin > .solution .container {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: auto;
+      display: block;
+    }
+    .solution-pin .cards-list {
+      overflow-x: auto !important;
+      scroll-snap-type: x mandatory !important;
+      transform: none !important;
+    }
+    .solution-pin .card-row {
+      transform: none !important;
+      opacity: 1 !important;
+      transition: none;
+    }
   }
 
 </style>
@@ -1508,6 +1601,9 @@
 
 <div class="cursor" id="cursor"></div>
 
+<!-- Global background: BG wall + yellow rain (always visible, fixed across all sections) -->
+<canvas class="hero-ascii" id="hero-ascii" aria-hidden="true"></canvas>
+
 <!-- NAV -->
 <nav class="top">
   <a href="#top" class="logo-link" aria-label="YDM Technology Services">
@@ -1527,9 +1623,6 @@
 
 <!-- HERO -->
 <header class="hero" id="top">
-  <div class="hero-bg"></div>
-  <canvas class="hero-ascii" id="hero-ascii" aria-hidden="true"></canvas>
-
   <div class="hero-top">
     <div class="right">
       [001]&nbsp;—&nbsp;A DIGITAL<br/>
@@ -1610,8 +1703,10 @@
         </div>
       </div>
       <div class="right about-media" aria-hidden="true">
-        <div class="media-placeholder">
-          <span class="media-label">IMAGE / VIDEO</span>
+        <div class="media-placeholder has-video">
+          <video class="placeholder-video" autoplay muted loop playsinline preload="metadata">
+            <source src="./about-video.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
@@ -1666,7 +1761,11 @@
 </section>
 
 <!-- 03.1 DATA & MARTECH -->
+<div class="solution-pin">
 <section class="solution" id="data">
+  <video class="section-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="./bg-data.mp4" type="video/mp4">
+  </video>
   <div class="section-bg" aria-hidden="true"></div>
   <div class="container">
     <div class="solution-intro">
@@ -1745,9 +1844,14 @@
     </div>
   </div>
 </section>
+</div>
 
 <!-- 03.2 AI & AUTOMATION -->
+<div class="solution-pin">
 <section class="solution" id="ai">
+  <video class="section-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="./bg-ai.mp4" type="video/mp4">
+  </video>
   <div class="section-bg" aria-hidden="true"></div>
   <div class="container">
     <div class="solution-intro">
@@ -1814,9 +1918,14 @@
     </div>
   </div>
 </section>
+</div>
 
 <!-- 03.3 WEB & APP -->
+<div class="solution-pin">
 <section class="solution" id="web">
+  <video class="section-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+    <source src="./bg-web.mp4" type="video/mp4">
+  </video>
   <div class="section-bg" aria-hidden="true"></div>
   <div class="container">
     <div class="solution-intro">
@@ -1877,6 +1986,7 @@
     </div>
   </div>
 </section>
+</div>
 
 <!-- 04 CONTACT -->
 <section id="contact">
@@ -2113,28 +2223,7 @@
 
   document.querySelectorAll('section, .hero').forEach(s => observer.observe(s));
 
-  // Solution sections: cursor morphs to "View Service" / "Hide";
-  // clicking anywhere (outside cards/links) expands cards-list from bottom
-  function updateCursorForSolution(section) {
-    const cards = section.querySelector('.cards');
-    const isOpen = cards && cards.classList.contains('open');
-    cursor.classList.add('mode-view');
-    cursor.innerHTML = isOpen ? 'Hide<br/>Cards' : 'View<br/>Service';
-  }
-  document.querySelectorAll('section.solution').forEach(section => {
-    section.addEventListener('mouseenter', () => updateCursorForSolution(section));
-    section.addEventListener('mouseleave', () => {
-      cursor.classList.remove('mode-view');
-      cursor.innerHTML = '';
-    });
-    section.addEventListener('click', (e) => {
-      if (e.target.closest('a, button, input, textarea, select, label, .cards-list')) return;
-      const cards = section.querySelector('.cards');
-      if (!cards) return;
-      cards.classList.toggle('open');
-      updateCursorForSolution(section);
-    });
-  });
+  // (Solution cursor morph + click-to-open removed; cards auto-reveal via scroll pin)
 
   // Nav background on scroll
   const navEl = document.querySelector('nav.top');
@@ -2304,11 +2393,25 @@
     const hero = document.getElementById('top');
     if (!canvas || !hero) return;
 
+    // Scroll-driven logo fade: 1 at top of page, 0 once user has scrolled ~1 viewport down.
+    // logoBlink = per-cell dissolve threshold so the logo flickers away rather than fading uniformly.
+    let logoOpacity = 1;
+    let logoBlink = null;
+    function updateLogoOpacity() {
+      const vh = Math.max(1, window.innerHeight);
+      const t = Math.min(1, Math.max(0, window.scrollY / (vh * 0.9)));
+      logoOpacity = 1 - t;
+    }
+    window.addEventListener('scroll', updateLogoOpacity, { passive: true });
+    window.addEventListener('resize', updateLogoOpacity);
+    updateLogoOpacity();
+
     const ctx = canvas.getContext('2d', { alpha: true });
     const off = document.createElement('canvas');
     const offCtx = off.getContext('2d', { willReadFrequently: true });
 
     const CHAR_ON = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&*+=?!/<>\\|';
+    const CHAR_RAIN = ':|';
     const CHAR_OFF = '.·:\'` ';
     const SPACE_WEIGHT = 4;
     const FONT = 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace';
@@ -2385,9 +2488,11 @@
       shiftY = new Float32Array(n);
       tempX = new Float32Array(n);
       tempY = new Float32Array(n);
+      logoBlink = new Float32Array(n);
       for (let i = 0; i < n; i++) {
         chars[i] = (Math.random() * 256) | 0;
         delay[i] = (Math.random() * 1800) | 0;
+        logoBlink[i] = Math.random(); // per-cell dissolve threshold
       }
       grid = computeGrid();
       startTime = performance.now();
@@ -2493,10 +2598,22 @@
 
           rState[idx] += (target - rState[idx]) * ease;
           const rv = rState[idx];
-          if (rv > 0.5) {
-            const alpha = Math.min(0.9, 0.32 + rv * 0.6);
-            ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
-            ctx.fillText(CHAR_ON[chars[idx] % CHAR_ON.length], baseX, baseY);
+          // Per-cell dissolve threshold: when blinkT > logoOpacity the cell has "blinked back"
+          // into the BG wall. Draw it as a regular BG-wall glyph so the logo dissolves into
+          // the surrounding texture instead of leaving a hole. On the edge of the dissolve
+          // front, randomly flip between logo-bright and wall-dim to produce a flicker.
+          const blinkT = logoBlink[idx];
+          const dissolved = blinkT > logoOpacity;
+          const edge = logoOpacity - blinkT;
+          const flickerOff = !dissolved && edge < 0.08 && Math.random() < 0.55;
+          const drawAsWall = rv <= 0.5 || dissolved || flickerOff;
+
+          if (!drawAsWall) {
+            const alpha = Math.min(0.9, 0.32 + rv * 0.6) * logoOpacity;
+            if (alpha >= 0.02) {
+              ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
+              ctx.fillText(CHAR_ON[chars[idx] % CHAR_ON.length], baseX, baseY);
+            }
           } else if (eGrid === 0 && trailAge[idx] > 0.05) {
             const alpha = 0.2 + trailAge[idx] * 0.6;
             ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
@@ -2530,7 +2647,7 @@
           if (ry < 0 || ry >= rows) continue;
           const idx = ry * cols + d.col;
           const yPx = ry * CELL + CELL * 0.5;
-          const ch = CHAR_ON[(chars[idx] + t * 3) % CHAR_ON.length];
+          const ch = CHAR_RAIN[(chars[idx] + t * 3) % CHAR_RAIN.length];
           const fade = 1 - t / d.trail;
           if (t === 0) {
             ctx.fillStyle = `rgba(255,255,200,${(0.95 * fade).toFixed(3)})`;
@@ -2552,15 +2669,13 @@
       window.addEventListener('resize', resize);
     }
 
-    hero.addEventListener('pointermove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      mouseX = mx;
-      mouseY = my;
+    // Canvas is fixed to viewport, so clientX/Y maps directly to canvas coords.
+    window.addEventListener('pointermove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
       if (!trailAge || !cols) return;
-      const c = (mx / CELL) | 0;
-      const r = (my / CELL) | 0;
+      const c = (mouseX / CELL) | 0;
+      const r = (mouseY / CELL) | 0;
       if (c >= 0 && c < cols && r >= 0 && r < rows) {
         trailAge[r * cols + c] = 1.0;
         if (Math.random() < 0.55) {
@@ -2572,24 +2687,91 @@
           }
         }
       }
+    }, { passive: true });
+    window.addEventListener('pointerout', (e) => {
+      if (!e.relatedTarget) {
+        mouseX = -9999; mouseY = -9999;
+        prevMouseX = -9999; prevMouseY = -9999;
+      }
     });
-    hero.addEventListener('pointerleave', () => {
-      mouseX = -9999; mouseY = -9999;
-      prevMouseX = -9999; prevMouseY = -9999;
-    });
-
-    const io = new IntersectionObserver((entries) => {
-      running = entries[0].isIntersecting;
-    }, { threshold: 0.01 });
-    io.observe(hero);
 
     document.addEventListener('visibilitychange', () => {
-      running = document.visibilityState === 'visible' && running;
+      running = document.visibilityState === 'visible';
     });
 
     hero.classList.add('has-ascii');
     resize();
     requestAnimationFrame(render);
+  })();
+
+  // ─── Solution sticky pins: stair-reveal + scroll-linked horizontal slide ───
+  (function initSolutionPins() {
+    const pins = document.querySelectorAll('.solution-pin');
+    if (!pins.length) return;
+    const DELAY_MS = 800;
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+    pins.forEach(pin => {
+      const section = pin.querySelector('.solution');
+      const list = pin.querySelector('.cards-list');
+      if (!section || !list) return;
+
+      list.querySelectorAll('.card-row').forEach((row, i) => {
+        row.style.setProperty('--idx', i);
+      });
+
+      const st = { timer: null, travel: 0, range: 0 };
+
+      function measure() {
+        if (isMobile()) {
+          pin.style.height = '';
+          list.style.transform = '';
+          return;
+        }
+        const viewportW = section.clientWidth || window.innerWidth;
+        const RIGHT_GAP = 40;
+        const travel = Math.max(0, list.scrollWidth - viewportW + RIGHT_GAP);
+        const range = Math.max(window.innerHeight * 0.6, travel);
+        st.travel = travel;
+        st.range = range;
+        pin.style.height = `${window.innerHeight + range}px`;
+      }
+
+      function onScroll() {
+        if (isMobile()) return;
+        const rect = pin.getBoundingClientRect();
+        const maxScroll = pin.offsetHeight - window.innerHeight;
+        const scrolled = Math.max(0, Math.min(maxScroll, -rect.top));
+        const progress = maxScroll > 0 ? scrolled / maxScroll : 0;
+
+        const isRevealed = section.classList.contains('cards-revealed');
+        if (!isRevealed) {
+          list.style.transform = 'translate3d(0, 0, 0)';
+          if (progress > 0.04 && !st.timer) {
+            st.timer = setTimeout(() => {
+              section.classList.add('cards-revealed');
+              st.startProgress = null;
+              st.timer = null;
+            }, DELAY_MS);
+          }
+          return;
+        }
+        if (st.startProgress == null) st.startProgress = progress;
+        const remain = Math.max(0.001, 1 - st.startProgress);
+        const slideP = Math.max(0, (progress - st.startProgress) / remain);
+        const slideT = Math.max(0, Math.min(1, (slideP - 0.1) / 0.9));
+        list.style.transform = `translate3d(${-slideT * st.travel}px, 0, 0)`;
+      }
+
+      measure();
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      let rt;
+      window.addEventListener('resize', () => {
+        clearTimeout(rt);
+        rt = setTimeout(() => { measure(); onScroll(); }, 120);
+      });
+    });
   })();
 </script>
 
