@@ -51,7 +51,6 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
     background: var(--bg);
   }
 
@@ -221,8 +220,6 @@
     position: relative;
     padding: 120px 0;
     min-height: 100vh;
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -236,6 +233,63 @@
   }
   .hero { opacity: 0; transition: opacity .8s ease; }
   .hero.in-view { opacity: 1; }
+
+  /* Stagger reveal — About */
+  #about .about-grid .left > *,
+  #about .about-grid .about-media {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity .6s ease, transform .75s cubic-bezier(.2,.8,.2,1);
+  }
+  #about.in-view .about-grid .left > *,
+  #about.in-view .about-grid .about-media {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #about.in-view .about-grid .left > *:nth-child(1) { transition-delay: 0.05s; }
+  #about.in-view .about-grid .left > *:nth-child(2) { transition-delay: 0.18s; }
+  #about.in-view .about-grid .left > *:nth-child(3) { transition-delay: 0.30s; }
+  #about.in-view .about-grid .left > *:nth-child(4) { transition-delay: 0.42s; }
+  #about.in-view .about-grid .left > *:nth-child(5) { transition-delay: 0.54s; }
+  #about.in-view .about-grid .about-media { transition-delay: 0.20s; }
+  #about .pillars .pillar {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .55s ease, transform .65s cubic-bezier(.2,.8,.2,1);
+  }
+  #about.in-view .pillars .pillar { opacity: 1; transform: translateY(0); }
+  #about.in-view .pillars .pillar:nth-child(1) { transition-delay: 0.62s; }
+  #about.in-view .pillars .pillar:nth-child(2) { transition-delay: 0.74s; }
+  #about.in-view .pillars .pillar:nth-child(3) { transition-delay: 0.86s; }
+
+  /* Stagger reveal — Contact */
+  #contact .contact-wrap .left > *,
+  #contact .contact-wrap .right {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity .6s ease, transform .75s cubic-bezier(.2,.8,.2,1);
+  }
+  #contact.in-view .contact-wrap .left > *,
+  #contact.in-view .contact-wrap .right {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #contact.in-view .contact-wrap .left > *:nth-child(1) { transition-delay: 0.05s; }
+  #contact.in-view .contact-wrap .left > *:nth-child(2) { transition-delay: 0.18s; }
+  #contact.in-view .contact-wrap .left > *:nth-child(3) { transition-delay: 0.30s; }
+  #contact.in-view .contact-wrap .left > *:nth-child(4) { transition-delay: 0.42s; }
+  #contact.in-view .contact-wrap .left > *:nth-child(5) { transition-delay: 0.54s; }
+  #contact.in-view .contact-wrap .right { transition-delay: 0.30s; }
+  #contact .contact-info > div {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .5s ease, transform .6s cubic-bezier(.2,.8,.2,1);
+  }
+  #contact.in-view .contact-info > div { opacity: 1; transform: translateY(0); }
+  #contact.in-view .contact-info > div:nth-child(1) { transition-delay: 0.55s; }
+  #contact.in-view .contact-info > div:nth-child(2) { transition-delay: 0.65s; }
+  #contact.in-view .contact-info > div:nth-child(3) { transition-delay: 0.75s; }
+  #contact.in-view .contact-info > div:nth-child(4) { transition-delay: 0.85s; }
   @media (max-width: 768px) { section { padding: 80px 0; } }
 
   .section-head {
@@ -257,7 +311,7 @@
     font-weight: 400;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--fg);
+    color: var(--accent);
     transition: color .3s ease;
   }
   section.active-section .section-head .label { color: var(--accent); }
@@ -281,6 +335,24 @@
   @media (max-width: 1200px) {
     h2.display { font-size: clamp(48px, 9vw, 96px); }
   }
+  h2.display::after {
+    content: '';
+    display: inline-block;
+    width: 0.15em;
+    height: 0.7em;
+    margin-left: 0.13em;
+    vertical-align: -0.04em;
+    transform: translateY(-4px);
+    background: url('./arrow-yellow.svg') no-repeat center / contain;
+    animation: display-cursor-blink 1s steps(1, end) infinite;
+  }
+  .solution:not(.overview-slot) h2.display::after {
+    margin-left: 0.156em;
+  }
+  @keyframes display-cursor-blink {
+    0%, 49.999%   { opacity: 1; }
+    50%, 100%     { opacity: 0; }
+  }
   .display em {
     font-style: normal;
     font-weight: 700;
@@ -300,8 +372,6 @@
     justify-content: space-between;
     position: relative;
     overflow: hidden;
-    scroll-snap-align: start;
-    scroll-snap-stop: normal;
   }
 
   .hero-ascii {
@@ -470,8 +540,8 @@
   #about { padding: 100px 0 80px; }
   .about-grid {
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    column-gap: 180px;
+    grid-template-columns: 50% 30%;
+    column-gap: 20%;
     align-items: stretch;
     flex: 1;
   }
@@ -489,6 +559,7 @@
     font-weight: 700;
   }
   .about-grid .left p.tagline {
+    width: 100%;
     max-width: none;
     font-family: var(--font);
     font-size: 24px;
@@ -502,18 +573,22 @@
   .pillars {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 20px;
+    width: 100%;
   }
   .pillar {
-    padding: 12px 0;
+    padding: 24px 20px;
     display: grid;
     grid-template-columns: minmax(180px, 1fr) 1.6fr;
     gap: 32px;
     align-items: start;
-    transition: background .3s;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    transition: background .3s, border-color .3s;
   }
   .pillar:hover {
-    background: linear-gradient(90deg, rgba(255,255,0,0.03), transparent);
+    border-color: rgba(255,255,0,0.35);
+    background: linear-gradient(90deg, rgba(255,255,0,0.04), transparent);
   }
   .pillar .idx {
     display: flex;
@@ -555,7 +630,7 @@
   .media-placeholder {
     position: relative;
     width: 100%;
-    min-height: 100%;
+    aspect-ratio: 4 / 3;
     border: 1px dashed var(--line-strong);
     background:
       linear-gradient(135deg, rgba(255,255,0,0.015) 0%, transparent 60%),
@@ -595,12 +670,8 @@
     object-fit: cover;
   }
 
-  @media (max-width: 1200px) {
-    .about-grid { gap: 80px; }
-  }
   @media (max-width: 900px) {
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .media-placeholder { min-height: 0; aspect-ratio: 16 / 10; }
+    .about-grid { grid-template-columns: 1fr; row-gap: 40px; }
     #about { min-height: auto; padding: 100px 0 60px; }
   }
 
@@ -613,7 +684,9 @@
     gap: 48px;
   }
   /* Solution sub-sections with video backgrounds */
-  .solution { overflow: hidden; }
+  .solution { overflow: visible; }
+  .solution > .section-video,
+  .solution > .section-bg { clip-path: inset(0); }
   .solution .section-video {
     position: absolute;
     inset: 0;
@@ -624,10 +697,14 @@
     pointer-events: none;
   }
   .solution .section-bg {
-    background:
-      linear-gradient(rgba(10,10,10,0.55), rgba(10,10,10,0.75)),
-      radial-gradient(ellipse at 80% 10%, rgba(255,255,0,0.05), transparent 55%);
+    background: transparent;
     z-index: 1;
+  }
+  .solution:not(.overview-slot) .section-bg {
+    background:
+      linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 80%),
+      linear-gradient(rgba(10,10,10,0.45), rgba(10,10,10,0.6)),
+      radial-gradient(ellipse at 80% 10%, rgba(255,255,0,0.05), transparent 55%);
   }
   #services .section-bg::before,
   .solution .section-bg::before { display: none; }
@@ -946,6 +1023,11 @@
   }
 
   /* ─── Contact ───────────────────────── */
+  #contact {
+    justify-content: flex-start;
+    min-height: auto;
+    padding: 140px 0 120px;
+  }
   .contact-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1417,7 +1499,7 @@
   .solution .cards {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 0;
     margin-top: 0;
   }
   .solution .cards-label {
@@ -1427,6 +1509,45 @@
     letter-spacing: 0.28em;
     color: var(--fg-muted);
     text-transform: uppercase;
+  }
+  .solution .cards-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-right: 4px;
+  }
+  .solution .drag-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    opacity: 0.55;
+    pointer-events: none;
+    user-select: none;
+  }
+  .solution .drag-arrow {
+    display: inline-block;
+    color: var(--accent);
+    will-change: transform, opacity;
+  }
+  .solution .drag-arrow.left { animation: drag-pulse-left 1.8s ease-in-out infinite; }
+  .solution .drag-arrow.right { animation: drag-pulse-right 1.8s ease-in-out infinite; }
+  @keyframes drag-pulse-left {
+    0%,100% { opacity: 0.4; transform: translateX(0); }
+    50%     { opacity: 1;   transform: translateX(-4px); }
+  }
+  @keyframes drag-pulse-right {
+    0%,100% { opacity: 0.4; transform: translateX(0); }
+    50%     { opacity: 1;   transform: translateX(4px); }
+  }
+  @media (max-width: 768px) {
+    .solution .drag-hint { font-size: 9px; gap: 8px; }
   }
 
   /* Horizontal card columns (slide left / scroll-linked) */
@@ -1455,7 +1576,7 @@
     gap: 12px;
     scroll-snap-align: start;
     position: relative;
-    transition: background .3s, padding .3s, border-color .3s;
+    transition: background .3s, border-color .3s;
     cursor: none;
   }
   .solution .card-row:hover {
@@ -1473,7 +1594,7 @@
     transition: height .35s cubic-bezier(.2,.8,.2,1);
   }
   .solution .card-row:hover::before { height: 2px; }
-  .solution .card-row:hover { padding-left: 28px; background: linear-gradient(180deg, rgba(255,255,0,0.04), transparent 70%); }
+  .solution .card-row:hover { background: linear-gradient(180deg, rgba(255,255,0,0.04), transparent 70%); }
   .solution .card-row:hover .card-title { color: var(--accent); }
   .solution .card-row:hover .arrow-small { color: var(--accent); transform: translateX(4px); }
   .solution .card-row .card-num {
@@ -1501,20 +1622,65 @@
     .solution .card-row { flex-basis: 280px; padding: 32px 22px; }
   }
 
-  /* ─── Sticky pin + scroll-linked horizontal cards ─────────── */
-  .solution-pin { position: relative; }
-  .solution-pin > .solution {
+  /* ─── Solution stack: single sticky stage, content swaps per slide ─────────── */
+  .solution-stack { position: relative; }
+  .solution-stage {
     position: sticky;
     top: 0;
+    height: 100vh;
+  }
+  .solution-nav {
+    position: absolute;
+    top: 96px;
+    right: clamp(16px, 4vw, 56px);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    pointer-events: auto;
+  }
+  .solution-nav .solution-dot {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 4px 0;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    color: rgba(245,245,240,0.4);
+    cursor: pointer;
+    transition: color .25s ease, transform .25s ease;
+    text-align: right;
+    line-height: 1;
+  }
+  .solution-nav .solution-dot:hover { color: var(--fg); }
+  .solution-nav .solution-dot.active {
+    color: var(--accent);
+    transform: translateX(-4px);
+  }
+  @media (max-width: 768px) {
+    .solution-nav { top: 80px; right: 20px; gap: 10px; }
+    .solution-nav .solution-dot { font-size: 10px; }
+  }
+  .solution-stage > .solution {
+    position: absolute;
+    inset: 0;
     height: 100vh;
     min-height: 0;
     padding: 0;
     margin: 0;
     scroll-snap-align: none;
-    opacity: 1;
+    opacity: 0;
+    pointer-events: none;
     transform: none;
+    transition: opacity 0.3s ease;
   }
-  .solution-pin > .solution .container {
+  .solution-stage > .solution.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .solution-stage > .solution .container {
     padding-top: 100px;
     padding-bottom: 40px;
     height: 100%;
@@ -1523,58 +1689,103 @@
     justify-content: flex-end;
     gap: 32px;
   }
-  .solution-pin .cards-list {
-    overflow: visible !important;
-    scroll-snap-type: none !important;
+  .solution-stage .cards-list {
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;
+    scroll-padding-left: 0;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    will-change: transform;
-    width: max-content;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    overscroll-behavior-x: contain;
   }
-  .solution-pin .cards-list::-webkit-scrollbar { display: none; }
-  .solution-pin .solution-intro,
-  .solution-pin .cards {
-    transform: translateY(60px);
+  .solution-stage .cards-list.dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+  }
+  .solution-stage .cards-list::-webkit-scrollbar { display: none; }
+  .solution-stage .solution-intro,
+  .solution-stage .cards {
+    transform: translateY(40px);
     opacity: 0;
-    transition: transform 0.8s cubic-bezier(.2,.8,.2,1), opacity 0.6s ease;
+    transition: transform 0.5s cubic-bezier(.2,.8,.2,1), opacity 0.35s ease;
   }
-  .solution-pin > .solution.cards-revealed .solution-intro,
-  .solution-pin > .solution.cards-revealed .cards {
+  .solution-stage > .solution.cards-revealed .solution-intro,
+  .solution-stage > .solution.cards-revealed .cards {
     transform: translateY(0);
     opacity: 1;
   }
-  .solution-pin .card-row {
+  .solution-stage .card-row {
     transform: translateY(120%);
     opacity: 0;
-    transition: transform 0.7s cubic-bezier(.2,.8,.2,1), opacity 0.5s ease;
-    transition-delay: calc(0.2s + var(--idx, 0) * 0.1s);
-    scroll-snap-align: none;
+    transition: transform 0.45s cubic-bezier(.2,.8,.2,1), opacity 0.3s ease;
+    transition-delay: calc(0.06s + var(--idx, 0) * 0.05s);
+    scroll-snap-align: start;
   }
-  .solution-pin > .solution.cards-revealed .card-row {
+  .solution-stage > .solution.cards-revealed .card-row {
     transform: translateY(0);
     opacity: 1;
   }
+
+  /* Overview slot (services) — reveal heading + pillar-big cards */
+  .solution-stage > .solution.overview-slot .container {
+    justify-content: center;
+    gap: 56px;
+  }
+  .solution-stage > .solution.overview-slot .overview-head,
+  .solution-stage > .solution.overview-slot .pillars-big {
+    transform: translateY(40px);
+    opacity: 0;
+    transition: transform 0.55s cubic-bezier(.2,.8,.2,1), opacity 0.4s ease;
+  }
+  .solution-stage > .solution.overview-slot.cards-revealed .overview-head,
+  .solution-stage > .solution.overview-slot.cards-revealed .pillars-big {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .solution-stage > .solution.overview-slot .pillar-big {
+    transform: translateY(80%);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(.2,.8,.2,1), opacity 0.35s ease;
+    transition-delay: calc(0.18s + var(--idx, 0) * 0.08s);
+  }
+  .solution-stage > .solution.overview-slot.cards-revealed .pillar-big {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  .solution-stage > .solution.overview-slot .pillars-big { transition-delay: 0.1s; margin-top: 0; }
   @media (max-width: 768px) {
-    .solution-pin { height: auto !important; }
-    .solution-pin > .solution {
+    .solution-stack { height: auto !important; }
+    .solution-stage {
       position: relative;
+      top: auto;
+      height: auto;
+    }
+    .solution-stage > .solution {
+      position: relative;
+      inset: auto;
       top: auto;
       height: auto;
       min-height: 100vh;
       padding: 80px 0;
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
-    .solution-pin > .solution .container {
+    .solution-stage > .solution .container {
       padding-top: 0;
       padding-bottom: 0;
       height: auto;
       display: block;
     }
-    .solution-pin .cards-list {
+    .solution-stage .cards-list {
       overflow-x: auto !important;
       scroll-snap-type: x mandatory !important;
       transform: none !important;
     }
-    .solution-pin .card-row {
+    .solution-stage .card-row {
       transform: none !important;
       opacity: 1 !important;
       transition: none;
@@ -1648,31 +1859,16 @@
   </div>
 </header>
 
-<!-- MARQUEE -->
-<div class="marquee" id="unstoppable">
-  <div class="marquee-track">
-    <span>MAKE IT UNSTOPPABLE</span>
-    <img src="arrow-yellow.svg" alt="" class="arrow" aria-hidden="true">
-    <span>MAKE IT UNSTOPPABLE</span>
-    <img src="arrow-yellow.svg" alt="" class="arrow" aria-hidden="true">
-    <span>MAKE IT UNSTOPPABLE</span>
-    <img src="arrow-yellow.svg" alt="" class="arrow" aria-hidden="true">
-    <span>MAKE IT UNSTOPPABLE</span>
-    <img src="arrow-yellow.svg" alt="" class="arrow" aria-hidden="true">
-  </div>
-</div>
-
 <!-- 02 ABOUT & WHY -->
 <section id="about">
   <div class="container">
     <div class="about-grid">
       <div class="left">
         <div class="section-head">
-          <span class="num">[02]</span>
-          <span class="label scramble" data-text="About &amp; Why">About &amp; Why</span>
+          <span class="label scramble" data-text="[ About &amp; Why ]">[ About &amp; Why ]</span>
         </div>
         <h2 class="display">
-          Technology that fits <em>the plan.</em>
+          Technology that fits <em>the plan</em>
         </h2>
         <p class="tagline">
           Engineering expertise meets marketing intelligence — digital solutions built for real-world impact.
@@ -1726,18 +1922,27 @@
   </div>
 </section>
 
-<!-- 03 SERVICES OVERVIEW -->
-<section id="services">
+<!-- 03 SOLUTIONS — single pinned stage, 4 slots: services overview + 3 solutions -->
+<div class="solution-stack">
+<div class="solution-stage">
+  <nav class="solution-nav" aria-label="Solutions navigation">
+    <button type="button" class="solution-dot active" data-slot="0" aria-label="Service overview">00</button>
+    <button type="button" class="solution-dot" data-slot="1" aria-label="Data &amp; MarTech">01</button>
+    <button type="button" class="solution-dot" data-slot="2" aria-label="AI &amp; Automation">02</button>
+    <button type="button" class="solution-dot" data-slot="3" aria-label="Web &amp; App">03</button>
+  </nav>
+
+<!-- 00 SERVICES OVERVIEW -->
+<section class="solution overview-slot" id="services">
   <div class="section-bg" aria-hidden="true"></div>
   <div class="container">
     <div class="overview-head">
       <div class="section-head">
-        <span class="num">[03]</span>
-        <span class="label scramble" data-text="Service / Solution">Service / Solution</span>
+        <span class="label scramble" data-text="[ Service / Solution ]">[ Service / Solution ]</span>
       </div>
       <h2 class="display">
         Expert-led services,<br/>
-        built for <em>impact.</em>
+        built for <em>impact</em>
       </h2>
     </div>
     <div class="pillars-big">
@@ -1761,7 +1966,6 @@
 </section>
 
 <!-- 03.1 DATA & MARTECH -->
-<div class="solution-pin">
 <section class="solution" id="data">
   <video class="section-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
     <source src="./bg-data.mp4" type="video/mp4">
@@ -1771,10 +1975,10 @@
     <div class="solution-intro">
       <div class="title-block">
         <div class="section-head">
-          <span class="num">[03.1]</span>
+          <span class="num">[01]</span>
           <span class="label scramble" data-text="Service / Solution — Data">Service / Solution — Data</span>
         </div>
-        <h2 class="display">Data &amp; <em>MarTech.</em></h2>
+        <h2 class="display">Data &amp; <em>MarTech</em></h2>
       </div>
       <div class="desc">
         <p class="intro">
@@ -1784,58 +1988,65 @@
     </div>
 
     <div class="cards" id="caps-data-list">
-      <div class="cards-label scramble" data-text="Capabilities (09)">Capabilities<br/>(09)</div>
+      <div class="cards-header">
+        <div class="cards-label scramble" data-text="Capabilities (09)">Capabilities (09)</div>
+        <div class="drag-hint" aria-hidden="true">
+          <span class="drag-arrow left">←</span>
+          <span>DRAG</span>
+          <span class="drag-arrow right">→</span>
+        </div>
+      </div>
       <div class="cards-list">
         <a class="card-row" href="#contact">
-          <div class="card-num">[01]</div>
+          <div class="card-num">/01</div>
           <h4 class="card-title">AI Total Solutions</h4>
           <p class="card-desc">End-to-end solution that connects data, tools, and AI — designed around your business use case.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[02]</div>
+          <div class="card-num">/02</div>
           <h4 class="card-title">MarTech Integration &amp; Implementation</h4>
           <p class="card-desc">Choose the right marketing tools, connect them with your data, and implement them seamlessly.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[03]</div>
+          <div class="card-num">/03</div>
           <h4 class="card-title">CDP Setup &amp; Implementation</h4>
           <p class="card-desc">Build a centralized customer data platform that unifies and activates data across channels.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[04]</div>
+          <div class="card-num">/04</div>
           <h4 class="card-title">CRM Setup &amp; Implementation</h4>
           <p class="card-desc">Set up or upgrade your CRM with automation and integration built in.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[05]</div>
+          <div class="card-num">/05</div>
           <h4 class="card-title">Data Collection &amp; Management</h4>
           <p class="card-desc">Collect and organize data the right way from the start with future-ready structures.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[06]</div>
+          <div class="card-num">/06</div>
           <h4 class="card-title">AI-Powered Insights &amp; Enhancement</h4>
           <p class="card-desc">Use AI to analyze behavior, predict trends, and unlock new opportunities.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[07]</div>
+          <div class="card-num">/07</div>
           <h4 class="card-title">Automation &amp; Workflow Design</h4>
           <p class="card-desc">Design AI-assisted workflows that reduce manual work and speed up operations.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[08]</div>
+          <div class="card-num">/08</div>
           <h4 class="card-title">Audience Intelligence &amp; Activation</h4>
           <p class="card-desc">Activate campaigns based on real behavior, predictive signals, and real-time triggers.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[09]</div>
+          <div class="card-num">/09</div>
           <h4 class="card-title">Performance Measurement Systems</h4>
           <p class="card-desc">Set up MMM, attribution, and test-and-learn frameworks to measure what truly matters.</p>
           <span class="arrow-small">→</span>
@@ -1844,10 +2055,8 @@
     </div>
   </div>
 </section>
-</div>
 
 <!-- 03.2 AI & AUTOMATION -->
-<div class="solution-pin">
 <section class="solution" id="ai">
   <video class="section-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
     <source src="./bg-ai.mp4" type="video/mp4">
@@ -1857,10 +2066,10 @@
     <div class="solution-intro">
       <div class="title-block">
         <div class="section-head">
-          <span class="num">[03.2]</span>
+          <span class="num">[02]</span>
           <span class="label scramble" data-text="Service / Solution — AI">Service / Solution — AI</span>
         </div>
-        <h2 class="display">AI &amp; <em>Automation.</em></h2>
+        <h2 class="display">AI &amp; <em>Automation</em></h2>
       </div>
       <div class="desc">
         <p class="intro">
@@ -1870,46 +2079,53 @@
     </div>
 
     <div class="cards" id="caps-ai-list">
-      <div class="cards-label scramble" data-text="Capabilities (07)">Capabilities<br/>(07)</div>
+      <div class="cards-header">
+        <div class="cards-label scramble" data-text="Capabilities (07)">Capabilities (07)</div>
+        <div class="drag-hint" aria-hidden="true">
+          <span class="drag-arrow left">←</span>
+          <span>DRAG</span>
+          <span class="drag-arrow right">→</span>
+        </div>
+      </div>
       <div class="cards-list">
         <a class="card-row" href="#contact">
-          <div class="card-num">[01]</div>
+          <div class="card-num">/01</div>
           <h4 class="card-title">Media Intelligence Engine</h4>
           <p class="card-desc">Pair AI with MMM to forecast, optimize, and scale media in real time.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[02]</div>
+          <div class="card-num">/02</div>
           <h4 class="card-title">Celebro — AI Influencer Platform</h4>
           <p class="card-desc">Uncover market gaps, analyze competitors, and match the right voice to your campaign.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[03]</div>
+          <div class="card-num">/03</div>
           <h4 class="card-title">Creative AI Lab</h4>
           <p class="card-desc">Turn big ideas into high-impact assets. Remix old footage or create brand-new visuals at scale.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[04]</div>
+          <div class="card-num">/04</div>
           <h4 class="card-title">ContentPulse — AI for Social Speed</h4>
           <p class="card-desc">Generate ideas, spot rising trends, and build content that lands fast.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[05]</div>
+          <div class="card-num">/05</div>
           <h4 class="card-title">AI Automation Engine</h4>
           <p class="card-desc">Connect platforms, unify data, and build smart AI-powered workflows across systems.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[06]</div>
+          <div class="card-num">/06</div>
           <h4 class="card-title">AI-Powered Personalization</h4>
           <p class="card-desc">Personalize content, offers, and journeys at scale — driven by unified data.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[07]</div>
+          <div class="card-num">/07</div>
           <h4 class="card-title">CRM &amp; Lifecycle Automation</h4>
           <p class="card-desc">Design CRM systems that fuel retention and automate customer journeys.</p>
           <span class="arrow-small">→</span>
@@ -1918,10 +2134,8 @@
     </div>
   </div>
 </section>
-</div>
 
 <!-- 03.3 WEB & APP -->
-<div class="solution-pin">
 <section class="solution" id="web">
   <video class="section-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
     <source src="./bg-web.mp4" type="video/mp4">
@@ -1931,10 +2145,10 @@
     <div class="solution-intro">
       <div class="title-block">
         <div class="section-head">
-          <span class="num">[03.3]</span>
+          <span class="num">[03]</span>
           <span class="label scramble" data-text="Service / Solution — Web">Service / Solution — Web</span>
         </div>
-        <h2 class="display">Web &amp; <em>App.</em></h2>
+        <h2 class="display">Web &amp; <em>App</em></h2>
       </div>
       <div class="desc">
         <p class="intro">
@@ -1944,40 +2158,47 @@
     </div>
 
     <div class="cards" id="caps-web-list">
-      <div class="cards-label scramble" data-text="Capabilities (06)">Capabilities<br/>(06)</div>
+      <div class="cards-header">
+        <div class="cards-label scramble" data-text="Capabilities (06)">Capabilities (06)</div>
+        <div class="drag-hint" aria-hidden="true">
+          <span class="drag-arrow left">←</span>
+          <span>DRAG</span>
+          <span class="drag-arrow right">→</span>
+        </div>
+      </div>
       <div class="cards-list">
         <a class="card-row" href="#contact">
-          <div class="card-num">[01]</div>
+          <div class="card-num">/01</div>
           <h4 class="card-title">Custom Website Development</h4>
           <p class="card-desc">Design and build websites that reflect your brand and deliver business outcomes.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[02]</div>
+          <div class="card-num">/02</div>
           <h4 class="card-title">Business Platform Solutions</h4>
           <p class="card-desc">Tools that match how each business runs — from hotels to clinics to retail.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[03]</div>
+          <div class="card-num">/03</div>
           <h4 class="card-title">E-commerce &amp; Affiliate Systems</h4>
           <p class="card-desc">Tailored platforms for your products, sales structure, and marketing needs.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[04]</div>
+          <div class="card-num">/04</div>
           <h4 class="card-title">Enterprise Systems &amp; ERP Integration</h4>
           <p class="card-desc">Build or upgrade core systems with custom ERP and business solutions.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[05]</div>
+          <div class="card-num">/05</div>
           <h4 class="card-title">Web &amp; App Integration Services</h4>
           <p class="card-desc">Connect your web or app with CRM, CDP, analytics, and MarTech tools.</p>
           <span class="arrow-small">→</span>
         </a>
         <a class="card-row" href="#contact">
-          <div class="card-num">[06]</div>
+          <div class="card-num">/06</div>
           <h4 class="card-title">Mobile App Development</h4>
           <p class="card-desc">Seamless mobile experiences — brand apps, booking tools, loyalty, and more.</p>
           <span class="arrow-small">→</span>
@@ -1986,6 +2207,8 @@
     </div>
   </div>
 </section>
+
+</div>
 </div>
 
 <!-- 04 CONTACT -->
@@ -1994,8 +2217,7 @@
     <div class="contact-wrap">
       <div class="left">
         <div class="section-head">
-          <span class="num">[04]</span>
-          <span class="label scramble" data-text="Get in Touch">Get in Touch</span>
+          <span class="label scramble" data-text="[ Get in Touch ]">[ Get in Touch ]</span>
         </div>
         <h2 class="display">
           How can we help you <em>innovate?</em>
@@ -2158,7 +2380,7 @@
 </section>
 
 <!-- MARQUEE (bottom) -->
-<div class="marquee">
+<div class="marquee" id="unstoppable">
   <div class="marquee-track">
     <span>MAKE IT UNSTOPPABLE</span>
     <img src="arrow-yellow.svg" alt="" class="arrow" aria-hidden="true">
@@ -2704,73 +2926,302 @@
     requestAnimationFrame(render);
   })();
 
-  // ─── Solution sticky pins: stair-reveal + scroll-linked horizontal slide ───
-  (function initSolutionPins() {
-    const pins = document.querySelectorAll('.solution-pin');
-    if (!pins.length) return;
-    const DELAY_MS = 800;
+  // ─── Solution stack: one sticky stage, content swaps per slide ───
+  (function initSolutionStack() {
+    const stack = document.querySelector('.solution-stack');
+    if (!stack) return;
+    const stage = stack.querySelector('.solution-stage');
+    if (!stage) return;
+    const sections = Array.from(stage.querySelectorAll('.solution'));
+    if (!sections.length) return;
+    const DELAY_MS = 300;
     const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
-    pins.forEach(pin => {
-      const section = pin.querySelector('.solution');
-      const list = pin.querySelector('.cards-list');
-      if (!section || !list) return;
-
-      list.querySelectorAll('.card-row').forEach((row, i) => {
-        row.style.setProperty('--idx', i);
-      });
-
-      const st = { timer: null, travel: 0, range: 0 };
-
-      function measure() {
-        if (isMobile()) {
-          pin.style.height = '';
-          list.style.transform = '';
-          return;
-        }
-        const viewportW = section.clientWidth || window.innerWidth;
-        const RIGHT_GAP = 40;
-        const travel = Math.max(0, list.scrollWidth - viewportW + RIGHT_GAP);
-        const range = Math.max(window.innerHeight * 0.6, travel);
-        st.travel = travel;
-        st.range = range;
-        pin.style.height = `${window.innerHeight + range}px`;
+    const slots = sections.map(section => {
+      const list = section.querySelector('.cards-list');
+      if (list) {
+        list.querySelectorAll('.card-row').forEach((row, i) => {
+          row.style.setProperty('--idx', i);
+        });
+        attachDrag(list);
       }
-
-      function onScroll() {
-        if (isMobile()) return;
-        const rect = pin.getBoundingClientRect();
-        const maxScroll = pin.offsetHeight - window.innerHeight;
-        const scrolled = Math.max(0, Math.min(maxScroll, -rect.top));
-        const progress = maxScroll > 0 ? scrolled / maxScroll : 0;
-
-        const isRevealed = section.classList.contains('cards-revealed');
-        if (!isRevealed) {
-          list.style.transform = 'translate3d(0, 0, 0)';
-          if (progress > 0.04 && !st.timer) {
-            st.timer = setTimeout(() => {
-              section.classList.add('cards-revealed');
-              st.startProgress = null;
-              st.timer = null;
-            }, DELAY_MS);
-          }
-          return;
-        }
-        if (st.startProgress == null) st.startProgress = progress;
-        const remain = Math.max(0.001, 1 - st.startProgress);
-        const slideP = Math.max(0, (progress - st.startProgress) / remain);
-        const slideT = Math.max(0, Math.min(1, (slideP - 0.1) / 0.9));
-        list.style.transform = `translate3d(${-slideT * st.travel}px, 0, 0)`;
-      }
-
-      measure();
-      onScroll();
-      window.addEventListener('scroll', onScroll, { passive: true });
-      let rt;
-      window.addEventListener('resize', () => {
-        clearTimeout(rt);
-        rt = setTimeout(() => { measure(); onScroll(); }, 120);
+      section.querySelectorAll('.pillar-big').forEach((p, i) => {
+        p.style.setProperty('--idx', i);
       });
+      return { section, list, slotH: 0, offset: 0, timer: null };
+    });
+
+    function attachDrag(list) {
+      let down = false, startX = 0, startScroll = 0, dragged = false, lastDx = 0;
+      list.addEventListener('pointerdown', e => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        down = true; dragged = false; lastDx = 0;
+        startX = e.clientX;
+        startScroll = list.scrollLeft;
+        list.classList.add('dragging');
+        try { list.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+      list.addEventListener('pointermove', e => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 2) dragged = true;
+        lastDx = dx;
+        list.scrollLeft = startScroll - dx;
+      });
+      const release = () => {
+        if (!down) return;
+        down = false;
+        list.classList.remove('dragging');
+        if (!dragged) return;
+        const cards = list.querySelectorAll('.card-row');
+        if (cards.length < 1) return;
+        const step = cards.length >= 2 ? cards[1].offsetLeft - cards[0].offsetLeft : cards[0].offsetWidth;
+        if (step <= 0) return;
+        const baseIdx = Math.round(startScroll / step);
+        let targetIdx = baseIdx;
+        if (Math.abs(lastDx) > step * 0.2) {
+          targetIdx = baseIdx + (lastDx < 0 ? 1 : -1);
+        }
+        targetIdx = Math.max(0, Math.min(cards.length - 1, targetIdx));
+        cards[targetIdx].scrollIntoView({ inline: 'start', block: 'nearest', behavior: 'smooth' });
+      };
+      list.addEventListener('pointerup', release);
+      list.addEventListener('pointercancel', release);
+      list.addEventListener('click', e => {
+        if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; }
+      }, true);
+    }
+
+    function measure() {
+      if (isMobile()) {
+        stack.style.height = '';
+        return;
+      }
+      let offset = 0;
+      slots.forEach(s => {
+        s.slotH = window.innerHeight;
+        s.offset = offset;
+        offset += s.slotH;
+      });
+      stack.style.height = `${offset + window.innerHeight}px`;
+    }
+
+    const navDots = Array.from(stage.querySelectorAll('.solution-nav .solution-dot'));
+    const slotIdById = { services: 0, data: 1, ai: 2, web: 3 };
+    let skipMode = false;
+
+    let activeIdx = -1;
+    function resetSlot(s) {
+      s.section.classList.remove('cards-revealed');
+      if (s.timer) { clearTimeout(s.timer); s.timer = null; }
+      if (s.list) s.list.scrollLeft = 0;
+    }
+    function scheduleReveal(s) {
+      if (s.timer || s.section.classList.contains('cards-revealed')) return;
+      s.timer = setTimeout(() => {
+        s.section.classList.add('cards-revealed');
+        s.timer = null;
+      }, DELAY_MS);
+    }
+    function setActive(idx) {
+      if (idx === activeIdx) return;
+      const prevIdx = activeIdx;
+      activeIdx = idx;
+      slots.forEach((s, i) => s.section.classList.toggle('active', i === idx));
+      navDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      if (prevIdx >= 0) {
+        resetSlot(slots[prevIdx]);
+        scheduleReveal(slots[idx]);
+      }
+    }
+
+    function skipToSlot(idx) {
+      if (idx < 0 || idx >= slots.length) return;
+      if (isMobile()) {
+        slots[idx].section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      skipMode = true;
+      setActive(idx);
+      const stackTop = stack.getBoundingClientRect().top + window.scrollY;
+      const target = stackTop + slots[idx].offset + 8;
+      // Force instant scroll: CSS html { scroll-behavior: smooth } would
+      // otherwise animate window.scrollTo, visually passing through
+      // intermediate slot offsets.
+      const html = document.documentElement;
+      const prevBehavior = html.style.scrollBehavior;
+      html.style.scrollBehavior = 'auto';
+      window.scrollTo(0, target);
+      requestAnimationFrame(() => { html.style.scrollBehavior = prevBehavior; });
+      setTimeout(() => { skipMode = false; }, 450);
+    }
+
+    navDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const i = parseInt(dot.dataset.slot, 10);
+        if (!Number.isNaN(i)) skipToSlot(i);
+      });
+    });
+
+    document.querySelectorAll('a.pillar-big[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const hash = link.getAttribute('href').slice(1);
+        if (!(hash in slotIdById)) return;
+        e.preventDefault();
+        skipToSlot(slotIdById[hash]);
+      });
+    });
+
+    function onScroll() {
+      if (skipMode) return;
+      if (isMobile()) {
+        slots.forEach(s => s.section.classList.add('active'));
+        return;
+      }
+      const rect = stack.getBoundingClientRect();
+      const totalH = stack.offsetHeight;
+      const scrolled = Math.max(0, Math.min(totalH - window.innerHeight, -rect.top));
+
+      let idx = 0;
+      for (let i = 0; i < slots.length; i++) {
+        if (scrolled < slots[i].offset + slots[i].slotH) { idx = i; break; }
+        if (i === slots.length - 1) idx = i;
+      }
+      setActive(idx);
+
+      // Slot 0 (services) reveal once the stack reaches the viewport top.
+      // Plain `progress > 0.04` failed with viewport-snap: scroll jumps
+      // directly to the slot offset (progress = 0) and never triggers.
+      if (idx === 0 && rect.top <= 0) {
+        scheduleReveal(slots[0]);
+      }
+    }
+
+    measure();
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    let rt;
+    window.addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = setTimeout(() => { measure(); onScroll(); }, 120);
+    });
+  })();
+
+  // ─── Viewport-snap scroll: 1 wheel/touch = next anchor (skips marquee) ───
+  (function initViewportSnap() {
+    const SNAP_DURATION = 1000;
+    const WHEEL_DEBOUNCE = 200;
+    const TOLERANCE = 6;
+    let scrolling = false;
+    let lastWheelTime = 0;
+
+    function shouldSkip(target) {
+      if (!target) return false;
+      if (target.closest && target.closest('.cards-list')) return true;
+      if (target.closest && target.closest('input, textarea, select, [contenteditable="true"]')) return true;
+      return false;
+    }
+
+    function getAnchors() {
+      const vh = window.innerHeight;
+      const anchors = [0];
+      const about = document.getElementById('about');
+      if (about) anchors.push(about.offsetTop);
+      const stack = document.querySelector('.solution-stack');
+      if (stack) {
+        const stackTop = stack.offsetTop;
+        for (let i = 0; i < 4; i++) anchors.push(stackTop + i * vh);
+      }
+      const contact = document.getElementById('contact');
+      if (contact) {
+        const top = contact.offsetTop;
+        const bottom = top + contact.offsetHeight;
+        for (let y = top; y < bottom; y += vh) anchors.push(y);
+      }
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - vh);
+      anchors.push(maxScroll);
+      return [...new Set(anchors.map(a => Math.round(a)))].sort((a, b) => a - b);
+    }
+
+    function findAnchorIdx(anchors, current, dir) {
+      // Find the index of the current anchor (or the one we're closest behind)
+      for (let i = anchors.length - 1; i >= 0; i--) {
+        if (current >= anchors[i] - TOLERANCE) return i;
+      }
+      return 0;
+    }
+
+    function snapTo(deltaSign) {
+      if (scrolling) return;
+      const anchors = getAnchors();
+      const current = window.scrollY;
+      const currentIdx = findAnchorIdx(anchors, current);
+      let targetIdx;
+      if (deltaSign > 0) {
+        // Scrolling down: if we're at or just past an anchor, go to next
+        const onAnchor = Math.abs(current - anchors[currentIdx]) <= TOLERANCE;
+        targetIdx = onAnchor ? currentIdx + 1 : currentIdx + 1;
+      } else {
+        // Scrolling up: if we're past current anchor, go back to it; otherwise prev
+        const onAnchor = Math.abs(current - anchors[currentIdx]) <= TOLERANCE;
+        targetIdx = onAnchor ? currentIdx - 1 : currentIdx;
+      }
+      targetIdx = Math.max(0, Math.min(anchors.length - 1, targetIdx));
+      const target = anchors[targetIdx];
+      if (Math.abs(target - current) < 2) return;
+      scrolling = true;
+      window.scrollTo({ top: target, behavior: 'smooth' });
+      setTimeout(() => { scrolling = false; }, SNAP_DURATION);
+    }
+
+    window.addEventListener('wheel', (e) => {
+      if (shouldSkip(e.target)) return;
+      e.preventDefault();
+      const now = Date.now();
+      if (scrolling || now - lastWheelTime < WHEEL_DEBOUNCE) return;
+      lastWheelTime = now;
+      if (Math.abs(e.deltaY) < 4) return;
+      snapTo(e.deltaY > 0 ? 1 : -1);
+    }, { passive: false });
+
+    let touchStartY = 0;
+    let touchStartTarget = null;
+    window.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+      touchStartTarget = e.target;
+    }, { passive: true });
+    window.addEventListener('touchend', (e) => {
+      if (shouldSkip(touchStartTarget)) return;
+      const dy = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(dy) < 60) {
+        // Tiny swipe — snap to nearest anchor
+        const anchors = getAnchors();
+        const current = window.scrollY;
+        let nearest = anchors[0], best = Infinity;
+        anchors.forEach(a => {
+          const d = Math.abs(a - current);
+          if (d < best) { best = d; nearest = a; }
+        });
+        if (Math.abs(nearest - current) > 4 && !scrolling) {
+          scrolling = true;
+          window.scrollTo({ top: nearest, behavior: 'smooth' });
+          setTimeout(() => { scrolling = false; }, SNAP_DURATION);
+        }
+        return;
+      }
+      snapTo(dy > 0 ? 1 : -1);
+    }, { passive: true });
+
+    // Keyboard PgUp/PgDn/Space — same snap
+    window.addEventListener('keydown', (e) => {
+      if (shouldSkip(e.target)) return;
+      if (e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) {
+        e.preventDefault();
+        snapTo(1);
+      } else if (e.key === 'PageUp' || (e.key === ' ' && e.shiftKey)) {
+        e.preventDefault();
+        snapTo(-1);
+      }
     });
   })();
 </script>
