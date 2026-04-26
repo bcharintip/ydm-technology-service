@@ -71,7 +71,8 @@
     position: fixed;
     top: 0; left: 0;
     width: 14px; height: 14px;
-    border: 1px solid var(--fg);
+    background: var(--accent);
+    border: 1px solid var(--accent);
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%,-50%);
@@ -204,15 +205,28 @@
     background: #fff;
     transform: translateY(-1px);
   }
-  @media (max-width: 1024px) {
-    nav.top ul { gap: 20px; }
+  @media (max-width: 1199px) {
+    nav.top ul { gap: 16px; }
+    nav.top ul li:not(:last-child) { display: none; }
   }
   @media (max-width: 768px) {
-    nav.top { padding: 16px 20px; }
-    nav.top .logo-link svg { height: 36px; }
-    nav.top .logo-link .sub { display: none; }
+    nav.top { padding: 14px 16px; }
+    nav.top .logo-link { gap: 10px; }
+    nav.top .logo-link svg { height: 28px; }
+    nav.top .logo-link .sub {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      line-height: 1.25;
+    }
     nav.top ul { gap: 12px; }
-    nav.top ul li:not(:last-child) { display: none; }
+    nav.top ul a.cta {
+      padding: 8px 14px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+    }
+  }
+  @media (max-width: 380px) {
+    nav.top .logo-link .sub { display: none; }
   }
 
   /* ─── Section scaffolding ───────────────────────── */
@@ -521,23 +535,36 @@
   }
   .hero-bottom .scroll-ind:hover .target { letter-spacing: 0.14em; }
   @media (max-width: 768px) {
-    .hero-bottom { grid-template-columns: 1fr; padding: 32px 20px; gap: 24px; }
-    .hero-bottom .scroll-ind { align-items: flex-start; justify-self: start; text-align: left; }
+    .hero-bottom {
+      grid-template-columns: 1fr;
+      padding: 24px 20px 36px;
+      gap: 18px;
+      text-align: center;
+      justify-items: center;
+    }
+    .hero-bottom .lead {
+      text-align: center;
+      min-height: 0;
+    }
+    .hero-bottom .scroll-ind {
+      align-items: center;
+      justify-self: center;
+      text-align: center;
+    }
   }
 
   /* ─── Section 02: About & Why ───────────────────────── */
   #about {
-    min-height: 100vh;
+    min-height: auto;
     display: flex;
     flex-direction: column;
-    padding: 120px 0 80px;
+    padding: 100px 0 80px;
   }
   #about > .container {
-    flex: 1;
+    flex: 0 1 auto;
     display: flex;
     flex-direction: column;
   }
-  #about { padding: 100px 0 80px; }
   .about-grid {
     display: grid;
     grid-template-columns: 50% 30%;
@@ -670,9 +697,35 @@
     object-fit: cover;
   }
 
-  @media (max-width: 900px) {
-    .about-grid { grid-template-columns: 1fr; row-gap: 40px; }
-    #about { min-height: auto; padding: 100px 0 60px; }
+  @media (max-width: 1199px) {
+    #about {
+      min-height: 0;
+      height: auto;
+      padding: 90px 0 60px;
+    }
+    #about > .container { flex: 0 1 auto; }
+    .about-grid {
+      display: flex;
+      flex-direction: column;
+      grid-template-columns: 1fr;
+      row-gap: 28px;
+      align-items: stretch;
+    }
+    .about-grid .left {
+      display: contents;
+    }
+    .about-grid .left .section-head { order: 1; margin-bottom: 0; }
+    .about-grid .left h2 { order: 2; margin-bottom: 0; }
+    .about-grid .left p.tagline { order: 3; font-size: 18px; }
+    .about-grid .about-media {
+      order: 4;
+      margin: 4px 0 8px;
+      max-width: 480px;
+      align-self: center;
+      width: 100%;
+    }
+    .about-grid .left > .mono { order: 5; margin: 12px 0 4px !important; }
+    .about-grid .left .pillars { order: 6; }
   }
 
   /* ─── Section 03: Services Overview ───────────────────────── */
@@ -798,6 +851,9 @@
   }
   .pillar-big .arrow { display: none; }
 
+  @media (max-width: 1199px) {
+    .pillar-big p { max-width: none; }
+  }
   @media (max-width: 900px) {
     .pillars-big { grid-template-columns: 1fr; }
     .pillar-big { border-right: none; border-bottom: 1px solid var(--line); }
@@ -1391,9 +1447,20 @@
     text-decoration-color: var(--accent);
   }
 
+  @media (max-width: 1199px) {
+    .contact-wrap {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .contact-wrap .left {
+      position: static;
+      top: auto;
+    }
+    .contact-wrap .right { order: 2; }
+    .contact-wrap .left { order: 1; }
+  }
   @media (max-width: 900px) {
-    .contact-wrap { grid-template-columns: 1fr; gap: 32px; }
-    .contact-wrap .left { position: static; top: auto; }
+    .contact-wrap { gap: 32px; }
     .checkbox-grid { grid-template-columns: 1fr; }
   }
 
@@ -1629,6 +1696,64 @@
     top: 0;
     height: 100vh;
   }
+  /* ASCII burst overlay — fires during slot transitions to mask the video swap */
+  .solution-stage .solution-ascii {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    display: block;
+    mix-blend-mode: screen;
+  }
+
+  /* TEMP: dark gradient overlay + solution-ascii burst hidden while
+     experimenting with hero canvas overlay. Remove to restore. */
+  .solution:not(.overview-slot) .section-bg,
+  .solution-stage .solution-ascii { display: none; }
+
+  /* TEMP: BG video moved to a fixed-position container behind the hero
+     ASCII canvas (z:-2 < hero z:-1) so the wall + rain + cursor
+     deformation overlays the video. The original .section-video
+     elements inside slots are hidden on desktop/tablet (mobile keeps
+     the in-slot videos because the stage isn't sticky there). */
+  .solution-bg-stack {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .solution-bg-stack .bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .solution-bg-stack .bg-video.active { opacity: 1; }
+  /* 0.65 black overlay on top of all videos (still inside the stack at
+     z:-2, so hero ASCII at z:-1 paints above this overlay too). */
+  .solution-bg-stack::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    pointer-events: none;
+  }
+  @media (min-width: 641px) {
+    .solution:not(.overview-slot) .section-video { display: none; }
+  }
+  @media (max-width: 640px) {
+    .solution-bg-stack { display: none; }
+  }
+  @media (max-width: 640px) {
+    .solution-stage .solution-ascii { display: none; }
+  }
   .solution-nav {
     position: absolute;
     top: 96px;
@@ -1757,7 +1882,7 @@
     opacity: 1;
   }
   .solution-stage > .solution.overview-slot .pillars-big { transition-delay: 0.1s; margin-top: 0; }
-  @media (max-width: 768px) {
+  @media (max-width: 640px) {
     .solution-stack { height: auto !important; }
     .solution-stage {
       position: relative;
@@ -1769,17 +1894,46 @@
       inset: auto;
       top: auto;
       height: auto;
-      min-height: 100vh;
+      min-height: auto;
       padding: 80px 0;
       opacity: 1 !important;
       pointer-events: auto !important;
+      justify-content: flex-start;
+    }
+    .solution-stage > .solution.overview-slot { min-height: 100vh; justify-content: center; }
+    .solution-stage > .solution:not(.overview-slot) {
+      padding: 100px 0 80px;
+    }
+    .solution-stage > .solution:not(.overview-slot) .section-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .solution-stage > .solution:not(.overview-slot) .section-bg {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.7) 100%),
+        linear-gradient(rgba(10,10,10,0.45), rgba(10,10,10,0.55));
     }
     .solution-stage > .solution .container {
       padding-top: 0;
       padding-bottom: 0;
       height: auto;
       display: block;
+      position: relative;
+      z-index: 2;
     }
+    .solution-stage .solution-intro,
+    .solution-stage .cards,
+    .solution-stage > .solution.overview-slot .overview-head,
+    .solution-stage > .solution.overview-slot .pillars-big,
+    .solution-stage > .solution.overview-slot .pillar-big {
+      transform: none !important;
+      opacity: 1 !important;
+      transition: none !important;
+    }
+    .solution-stage .cards { margin-top: 28px; }
     .solution-stage .cards-list {
       overflow-x: auto !important;
       scroll-snap-type: x mandatory !important;
@@ -1790,6 +1944,7 @@
       opacity: 1 !important;
       transition: none;
     }
+    .solution-nav { display: none; }
   }
 
 </style>
@@ -1814,6 +1969,20 @@
 
 <!-- Global background: BG wall + yellow rain (always visible, fixed across all sections) -->
 <canvas class="hero-ascii" id="hero-ascii" aria-hidden="true"></canvas>
+
+<!-- Solution BG videos — fixed at z:-2, behind hero canvas (z:-1).
+     JS toggles `.active` based on the active solution slot. Hidden on mobile. -->
+<div class="solution-bg-stack" aria-hidden="true">
+  <video class="bg-video" data-slot="data" autoplay muted loop playsinline preload="metadata">
+    <source src="./bg-data.mp4" type="video/mp4">
+  </video>
+  <video class="bg-video" data-slot="ai" autoplay muted loop playsinline preload="metadata">
+    <source src="./bg-ai.mp4" type="video/mp4">
+  </video>
+  <video class="bg-video" data-slot="web" autoplay muted loop playsinline preload="metadata">
+    <source src="./bg-web.mp4" type="video/mp4">
+  </video>
+</div>
 
 <!-- NAV -->
 <nav class="top">
@@ -1931,6 +2100,7 @@
     <button type="button" class="solution-dot" data-slot="2" aria-label="AI &amp; Automation">02</button>
     <button type="button" class="solution-dot" data-slot="3" aria-label="Web &amp; App">03</button>
   </nav>
+  <canvas class="solution-ascii" id="solution-ascii" aria-hidden="true"></canvas>
 
 <!-- 00 SERVICES OVERVIEW -->
 <section class="solution overview-slot" id="services">
@@ -2655,6 +2825,32 @@
     let running = true;
     let logoReady = false;
     const drops = [];
+    let rainEnabled = true;
+    let wallAlpha = 0.16;
+    // Wall sweep transition state. While active a band of rows renders
+    // CHAR_ON glyphs instead of the usual CHAR_OFF wall, so the wall
+    // visibly "lights up" in a wave when the user enters/changes a
+    // BG-video slot. Direction matches the user's scroll direction.
+    let sweepStart = 0;
+    let sweepDir = 1;               // +1 = top→down, -1 = bottom→up
+    const SWEEP_DURATION = 1700;
+    // External toggles — the solution-stack JS calls these to dim the
+    // wall, suppress rain, and trigger the sweep when over a video slot.
+    window.setHeroRainEnabled = function(v) {
+      const next = !!v;
+      if (rainEnabled === next) return;
+      rainEnabled = next;
+      if (!rainEnabled) drops.length = 0; // clear in-flight drops immediately
+    };
+    window.setHeroWallAlpha = function(v) {
+      const n = Math.max(0, Math.min(1, +v));
+      if (!Number.isFinite(n)) return;
+      wallAlpha = n;
+    };
+    window.triggerHeroWallSweep = function(dir) {
+      sweepDir = dir < 0 ? -1 : 1;
+      sweepStart = performance.now();
+    };
 
     const logoImg = new Image();
     logoImg.src = 'logo.svg';
@@ -2675,10 +2871,11 @@
       offCtx.clearRect(0, 0, cols, rows);
       const g = new Uint8Array(cols * rows);
       if (!logoReady) return g;
-      let dw = cols * 0.576;
+      const logoScale = window.innerWidth <= 768 ? 0.69 : 0.576;
+      let dw = cols * logoScale;
       let dh = dw / LOGO_ASPECT;
-      if (dh > rows * 0.576) {
-        dh = rows * 0.576;
+      if (dh > rows * logoScale) {
+        dh = rows * logoScale;
         dw = dh * LOGO_ASPECT;
       }
       const dx = (cols - dw) / 2;
@@ -2741,6 +2938,24 @@
       ctx.font = `${CELL}px ${FONT}`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
+
+      // Wall sweep band — narrower noisy band travels through viewport.
+      const sweepT = sweepStart > 0 ? (now - sweepStart) / SWEEP_DURATION : 1;
+      const sweepActive = sweepT < 1 && sweepT >= 0;
+      const sweepBandH = h * 0.30;
+      let sweepCenter = 0;
+      if (sweepActive) {
+        // ease-in-out cubic for smoother travel
+        const e = sweepT < 0.5
+          ? 4 * sweepT * sweepT * sweepT
+          : 1 - Math.pow(-2 * sweepT + 2, 3) / 2;
+        const travel = h + sweepBandH;
+        if (sweepDir > 0) {
+          sweepCenter = -sweepBandH * 0.5 + e * travel;
+        } else {
+          sweepCenter = h + sweepBandH * 0.5 - e * travel;
+        }
+      }
 
       const M_INVERT = 40;
       const M_INVERT_SQ = M_INVERT * M_INVERT;
@@ -2841,42 +3056,67 @@
             ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
             ctx.fillText(CHAR_ON[chars[idx] % CHAR_ON.length], baseX, baseY);
           } else {
+            // Wall — sweep spawns scattered flickering CHAR_ON glyphs
+            // inside a moving band. Cells decide per frame whether to
+            // light up (probability ramps with proximity to the band
+            // center), and pick a random glyph each frame so the band
+            // looks noisy/staticky instead of a solid horizontal bar.
+            if (sweepActive) {
+              const dist = Math.abs(baseY - sweepCenter);
+              const halfBand = sweepBandH * 0.5;
+              if (dist < halfBand) {
+                const proximity = 1 - dist / halfBand;
+                // Spawn probability — very sparse at edges, denser at center
+                const spawn = proximity * proximity * 0.55;
+                if (Math.random() < spawn) {
+                  const ch = CHAR_ON[(Math.random() * CHAR_ON.length) | 0];
+                  const a = 0.30 + Math.random() * 0.55 * proximity;
+                  ctx.fillStyle = `rgba(255,255,255,${a.toFixed(3)})`;
+                  ctx.fillText(ch, baseX, baseY);
+                  continue;
+                }
+              }
+            }
             const ch = pickOff(idx);
             if (ch === ' ') continue;
-            ctx.fillStyle = 'rgba(255,255,255,0.16)';
+            ctx.fillStyle = `rgba(255,255,255,${wallAlpha})`;
             ctx.fillText(ch, baseX, baseY);
           }
         }
       }
 
-      // Yellow rain drops (matrix-style), render on top
-      const maxDrops = Math.max(6, Math.floor(cols / 24));
-      if (drops.length < maxDrops && Math.random() < 0.12) {
-        drops.push({
-          col: (Math.random() * cols) | 0,
-          y: -(Math.random() * 6) - 2,
-          speed: 0.08 + Math.random() * 0.18,
-          trail: 8 + ((Math.random() * 14) | 0),
-        });
-      }
-      for (let i = drops.length - 1; i >= 0; i--) {
-        const d = drops[i];
-        d.y += d.speed;
-        if (d.y - d.trail > rows) { drops.splice(i, 1); continue; }
-        const xPx = d.col * CELL + CELL * 0.5;
-        for (let t = 0; t < d.trail; t++) {
-          const ry = (d.y - t) | 0;
-          if (ry < 0 || ry >= rows) continue;
-          const idx = ry * cols + d.col;
-          const yPx = ry * CELL + CELL * 0.5;
-          const ch = CHAR_RAIN[(chars[idx] + t * 3) % CHAR_RAIN.length];
-          const fade = 1 - t / d.trail;
-          if (t === 0) {
-            ctx.fillStyle = `rgba(255,255,200,${(0.95 * fade).toFixed(3)})`;
-          } else {
-            ctx.fillStyle = `rgba(255,255,0,${(0.78 * fade).toFixed(3)})`;
+      // Yellow rain drops (matrix-style), render on top — gated by
+      // window.setHeroRainEnabled(false) when the user is in a video-
+      // backed solution slot.
+      if (rainEnabled) {
+        const maxDrops = Math.max(6, Math.floor(cols / 24));
+        if (drops.length < maxDrops && Math.random() < 0.12) {
+          drops.push({
+            col: (Math.random() * cols) | 0,
+            y: -(Math.random() * 6) - 2,
+            speed: 0.08 + Math.random() * 0.18,
+            trail: 8 + ((Math.random() * 14) | 0),
+          });
+        }
+        for (let i = drops.length - 1; i >= 0; i--) {
+          const d = drops[i];
+          d.y += d.speed;
+          if (d.y - d.trail > rows) { drops.splice(i, 1); continue; }
+          const xPx = d.col * CELL + CELL * 0.5;
+          for (let t = 0; t < d.trail; t++) {
+            const ry = (d.y - t) | 0;
+            if (ry < 0 || ry >= rows) continue;
+            const idx = ry * cols + d.col;
+            const yPx = ry * CELL + CELL * 0.5;
+            const ch = CHAR_RAIN[(chars[idx] + t * 3) % CHAR_RAIN.length];
+            const fade = 1 - t / d.trail;
+            if (t === 0) {
+              ctx.fillStyle = `rgba(255,255,200,${(0.95 * fade).toFixed(3)})`;
+            } else {
+              ctx.fillStyle = `rgba(255,255,0,${(0.78 * fade).toFixed(3)})`;
+            }
+            ctx.fillText(ch, xPx, yPx);
           }
-          ctx.fillText(ch, xPx, yPx);
         }
       }
 
@@ -2926,6 +3166,362 @@
     requestAnimationFrame(render);
   })();
 
+  // ─── Solution-stage ASCII burst + cursor trail (over BG-video slots) ───
+  (function initSolutionAsciiBurst() {
+    const canvas = document.getElementById('solution-ascii');
+    if (!canvas) return;
+    const stage = canvas.parentElement;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const DPR = Math.min(2, window.devicePixelRatio || 1);
+    const FONT = 'JetBrains Mono, Menlo, Consolas, monospace';
+    const WALL_CHARS = ";.,'`";
+    const FLICKER_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789{}[]<>/\\:;-+=*";
+    const BURST_DURATION = 1500;
+    const TOTAL_DURATION = BURST_DURATION;
+    // Cursor effect mirrors the hero canvas: shift-field fluid
+    // deformation + per-cell trailAge brightness boost. The "wall" is
+    // alpha 0 (no static backdrop), so only cells with trailAge > 0
+    // are visible — a bright trail of CHAR_ON glyphs that ripple as
+    // the shift diffuses.
+    const CHAR_ON = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&*+=?!/<>\\|';
+    const CHAR_OFF = '.·:\'`';
+    const WALL_ALPHA = 0.08;        // dim baseline wall (hero uses 0.16)
+    const KICK_R = 140;
+    const KICK_R_SQ = KICK_R * KICK_R;
+    const DRAG_STR = 1.0;
+    const BULGE_STR = 1.4;
+    const DIFFUSE_RATE = 0.072;
+    const DECAY_RATE = 0.988;
+    const TRAIL_DECAY = 0.93;
+    const DEFORM_FADE_IN = 0.16;
+    const DEFORM_FADE_OUT = 0.08;
+    const MOUSE_TIMEOUT = 1200;
+    let CELL = 12, w = 0, h = 0, cols = 0, rows = 0;
+    let burstStart = 0;
+    let running = false;
+    // Per-cell state (allocated in resize)
+    let chars = null;               // Uint8Array — stable seed per cell, occasional shimmer
+    let trailAge = null;            // Float32Array — brightness boost from cursor
+    let shiftX = null, shiftY = null;
+    let tempX = null, tempY = null;
+    let mouseX = -9999, mouseY = -9999;
+    let prevMouseX = -9999, prevMouseY = -9999;
+    let lastMouseTime = 0;
+    let deformOpacity = 0;
+    let pointerInStage = false;
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const rw = rect.width || canvas.parentElement?.clientWidth || window.innerWidth;
+      const rh = rect.height || canvas.parentElement?.clientHeight || window.innerHeight;
+      if (rw === 0 || rh === 0) return false;
+      w = rw; h = rh;
+      CELL = w < 640 ? 10 : w < 1024 ? 11 : 12;
+      canvas.width = Math.floor(w * DPR);
+      canvas.height = Math.floor(h * DPR);
+      cols = Math.ceil(w / CELL);
+      rows = Math.ceil(h / CELL);
+      const n = cols * rows;
+      chars = new Uint8Array(n);
+      for (let i = 0; i < n; i++) chars[i] = (Math.random() * 256) | 0;
+      trailAge = new Float32Array(n);
+      shiftX = new Float32Array(n);
+      shiftY = new Float32Array(n);
+      tempX = new Float32Array(n);
+      tempY = new Float32Array(n);
+      return true;
+    }
+
+    // ASCII wall transition: fade-in `;.,` → flicker letters → fade out.
+    // Pure white/grey, no yellow. Replaces the earlier stair-sweep burst.
+    function drawWall(t) {
+      if (t <= 0 || t >= 1) return;
+      let alpha, charSet, density;
+      if (t < 0.20) {
+        // Phase 1: wall of `;.,` fading in
+        alpha = t / 0.20;
+        charSet = WALL_CHARS;
+        density = 0.55;
+      } else if (t < 0.65) {
+        // Phase 2: alphabet flicker at full brightness
+        alpha = 1;
+        charSet = FLICKER_CHARS;
+        density = 0.50;
+      } else {
+        // Phase 3: still flickering, but fading out
+        const k = (t - 0.65) / 0.35;
+        alpha = 1 - k;
+        charSet = FLICKER_CHARS;
+        // Density decays so it visually thins as it fades
+        density = 0.50 * (1 - k * 0.6);
+      }
+
+      for (let y = 0; y < rows; y++) {
+        const yPx = y * CELL + CELL / 2;
+        for (let x = 0; x < cols; x++) {
+          if (Math.random() > density) continue;
+          const ch = charSet.charAt((Math.random() * charSet.length) | 0);
+          const a = alpha * (0.18 + Math.random() * 0.32);
+          ctx.fillStyle = `rgba(245,245,240,${a})`;
+          ctx.fillText(ch, x * CELL + CELL / 2, yPx);
+        }
+      }
+    }
+
+    // Bottom-up randomized flicker: a soft wave of chars rises from the
+    // bottom edge to past the top. Each cell decides per frame whether
+    // to fire based on its distance from the wave's leading edge — so
+    // the visible pattern is sparse and noisy (no straight horizontal
+    // line). Phase 1 uses ;., (sparse wall); phase 2+ uses alphabet
+    // flicker; final 30% fades both density and alpha.
+    function drawWall(t) {
+      if (t <= 0 || t >= 1) return;
+      // ease-in-out cubic so the wave moves at near-constant speed mid-sweep
+      const e = t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      // Wave position: starts below canvas (h*1.05), ends above (-h*0.20)
+      const waveY = h * 1.05 - e * (h * 1.25);
+      const trailH = h * 0.55; // fade above wave (cells already passed)
+      const leadH  = h * 0.18; // sparse pre-firing below wave
+      // End fade for the last 30% — overall alpha & density taper to 0
+      const endFade = t > 0.7 ? Math.max(0, 1 - (t - 0.7) / 0.3) : 1;
+      // Char set: walls during early phase, flicker chars later
+      const charSet = t < 0.20 ? WALL_CHARS : FLICKER_CHARS;
+
+      for (let y = 0; y < rows; y++) {
+        const yPx = y * CELL + CELL / 2;
+        const dist = yPx - waveY;
+        let p;
+        if (dist > leadH) {
+          continue; // far ahead — not yet
+        } else if (dist > 0) {
+          // pre-firing zone — sparse, builds up as wave approaches
+          p = 0.10 * (1 - dist / leadH);
+        } else {
+          // trail zone — densest just behind wave, fades upward
+          const behind = -dist / trailH;
+          p = Math.max(0, 0.42 - behind * 0.42);
+        }
+        p *= endFade;
+        if (p < 0.015) continue;
+
+        for (let x = 0; x < cols; x++) {
+          if (Math.random() > p) continue;
+          const ch = charSet.charAt((Math.random() * charSet.length) | 0);
+          const a = endFade * (0.20 + Math.random() * 0.40);
+          ctx.fillStyle = `rgba(245,245,240,${a})`;
+          ctx.fillText(ch, x * CELL + CELL / 2, yPx);
+        }
+      }
+    }
+
+    // Hero-style cursor: shift-field deformation (drag + bulge,
+    // diffuse + decay) plus per-cell trailAge brightness boost.
+    // Wall is invisible (alpha 0) so only cells with trailAge > 0
+    // render — char identity is stable per cell from `chars[]`,
+    // the shift field resamples those chars so the trail "flows".
+    function drawDeform() {
+      // Shimmer — rewrite a few char seeds each frame for ambient motion
+      const total = chars.length;
+      const shimmer = Math.max(40, total >> 8);
+      for (let i = 0; i < shimmer; i++) {
+        chars[(Math.random() * total) | 0] = (Math.random() * 256) | 0;
+      }
+
+      // Decay trailAge
+      for (let i = 0; i < trailAge.length; i++) {
+        if (trailAge[i] > 0.005) trailAge[i] *= TRAIL_DECAY;
+        else trailAge[i] = 0;
+      }
+
+      // Snapshot shift for diffusion
+      tempX.set(shiftX);
+      tempY.set(shiftY);
+
+      const hasMouse = mouseX > -9000;
+      const mvX = hasMouse && prevMouseX > -9000 ? mouseX - prevMouseX : 0;
+      const mvY = hasMouse && prevMouseY > -9000 ? mouseY - prevMouseY : 0;
+      prevMouseX = mouseX;
+      prevMouseY = mouseY;
+
+      for (let r = 0; r < rows; r++) {
+        const baseY = r * CELL + CELL * 0.5;
+        for (let c = 0; c < cols; c++) {
+          const idx = r * cols + c;
+          const baseX = c * CELL + CELL * 0.5;
+
+          // Diffuse (4-neighbor avg) + decay
+          const left = c > 0 ? idx - 1 : idx;
+          const right = c < cols - 1 ? idx + 1 : idx;
+          const up = r > 0 ? idx - cols : idx;
+          const down = r < rows - 1 ? idx + cols : idx;
+          const avgX = (tempX[left] + tempX[right] + tempX[up] + tempX[down]) * 0.25;
+          const avgY = (tempY[left] + tempY[right] + tempY[up] + tempY[down]) * 0.25;
+          shiftX[idx] = (tempX[idx] * (1 - DIFFUSE_RATE) + avgX * DIFFUSE_RATE) * DECAY_RATE;
+          shiftY[idx] = (tempY[idx] * (1 - DIFFUSE_RATE) + avgY * DIFFUSE_RATE) * DECAY_RATE;
+
+          // Cursor drag + radial bulge (140px influence)
+          if (hasMouse) {
+            const dx = baseX - mouseX;
+            const dy = baseY - mouseY;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < KICK_R_SQ && d2 > 0.5) {
+              const d = Math.sqrt(d2);
+              const inf = 1 - d / KICK_R;
+              const inf2 = inf * inf;
+              shiftX[idx] += mvX * inf2 * DRAG_STR;
+              shiftY[idx] += mvY * inf2 * DRAG_STR;
+              const bulge = inf2 * BULGE_STR;
+              shiftX[idx] += (dx / d) * bulge;
+              shiftY[idx] += (dy / d) * bulge;
+            }
+          }
+
+          // Resample char with shifted lookup so the trail flows
+          const sampleC = c - Math.round(shiftX[idx] / CELL);
+          const sampleR = r - Math.round(shiftY[idx] / CELL);
+          let ci = idx;
+          if (sampleC >= 0 && sampleC < cols && sampleR >= 0 && sampleR < rows) {
+            ci = sampleR * cols + sampleC;
+          }
+
+          if (trailAge[idx] >= 0.05) {
+            // Lit trail — bright CHAR_ON
+            const a = (0.2 + trailAge[idx] * 0.6) * deformOpacity;
+            if (a < 0.02) continue;
+            const ch = CHAR_ON[chars[ci] % CHAR_ON.length];
+            ctx.fillStyle = `rgba(245,245,240,${a.toFixed(3)})`;
+            ctx.fillText(ch, baseX, baseY);
+          } else {
+            // Baseline wall — dim CHAR_OFF
+            const a = WALL_ALPHA * deformOpacity;
+            if (a < 0.015) continue;
+            const ch = CHAR_OFF[chars[ci] % CHAR_OFF.length];
+            ctx.fillStyle = `rgba(245,245,240,${a.toFixed(3)})`;
+            ctx.fillText(ch, baseX, baseY);
+          }
+        }
+      }
+    }
+
+    // Bump trailAge at the pointer cell + 8 neighbors. Mirrors the
+    // hero canvas so the trail width matches the surrounding sections.
+    function bumpTrail() {
+      if (!trailAge || !cols) return;
+      const c = (mouseX / CELL) | 0;
+      const r = (mouseY / CELL) | 0;
+      if (c < 0 || c >= cols || r < 0 || r >= rows) return;
+      trailAge[r * cols + c] = 1.0;
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          if (dr === 0 && dc === 0) continue;
+          const nc = c + dc, nr = r + dr;
+          if (nc < 0 || nc >= cols || nr < 0 || nr >= rows) continue;
+          const nIdx = nr * cols + nc;
+          if (trailAge[nIdx] < 0.75) trailAge[nIdx] = 0.75;
+        }
+      }
+    }
+
+    function activeSlotHasVideo() {
+      const a = stage.querySelector('.solution.active');
+      return !!a && !a.classList.contains('overview-slot');
+    }
+
+    function render() {
+      if (!running) return;
+      const now = performance.now();
+      const elapsed = now - burstStart;
+      const burstActive = burstStart > 0 && elapsed < TOTAL_DURATION;
+
+      // Animate deformOpacity toward target
+      const mouseRecent = (now - lastMouseTime) < MOUSE_TIMEOUT;
+      const target = (mouseRecent && pointerInStage && activeSlotHasVideo()) ? 1 : 0;
+      const rate = deformOpacity < target ? DEFORM_FADE_IN : DEFORM_FADE_OUT;
+      deformOpacity += (target - deformOpacity) * rate;
+      if (deformOpacity < 0.005 && target === 0) deformOpacity = 0;
+      const deformActive = deformOpacity > 0.005;
+
+      if (!burstActive && !deformActive) {
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        ctx.clearRect(0, 0, w, h);
+        canvas.style.opacity = '0';
+        running = false;
+        return;
+      }
+
+      canvas.style.opacity = '1';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      ctx.font = `${CELL}px ${FONT}`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      if (deformActive) drawDeform();
+      if (burstActive) drawWall(elapsed / BURST_DURATION);
+
+      requestAnimationFrame(render);
+    }
+
+    function ensureRender() {
+      if (running) return;
+      if (!w || !h) {
+        if (!resize()) return;
+      }
+      running = true;
+      requestAnimationFrame(render);
+    }
+
+    // Cursor → fluid deformation. Listen on window so we capture coords
+    // anywhere; mark in/out of stage to gate when the wall is visible.
+    window.addEventListener('pointermove', (e) => {
+      if (window.matchMedia('(max-width: 640px)').matches) return;
+      const sRect = stage.getBoundingClientRect();
+      const inside = e.clientX >= sRect.left && e.clientX <= sRect.right
+                  && e.clientY >= sRect.top  && e.clientY <= sRect.bottom;
+      if (inside) {
+        const cRect = canvas.getBoundingClientRect();
+        const nx = e.clientX - cRect.left;
+        const ny = e.clientY - cRect.top;
+        // On stage entry seed prev to current so first frame's drag
+        // delta isn't a huge teleport vector.
+        if (!pointerInStage) { prevMouseX = nx; prevMouseY = ny; }
+        mouseX = nx; mouseY = ny;
+        lastMouseTime = performance.now();
+        pointerInStage = true;
+        if (activeSlotHasVideo()) {
+          bumpTrail();
+          ensureRender();
+        }
+      } else if (pointerInStage) {
+        pointerInStage = false;
+        mouseX = -9999; mouseY = -9999;
+        prevMouseX = -9999; prevMouseY = -9999;
+      }
+    });
+
+    window.triggerSolutionAsciiBurst = function() {
+      if (window.matchMedia('(max-width: 640px)').matches) return;
+      if (!w || !h) {
+        if (!resize()) return;
+      }
+      burstStart = performance.now();
+      ensureRender();
+    };
+
+    let rt;
+    window.addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = setTimeout(resize, 120);
+    });
+    // Defer first sizing until after layout has settled — at script run time
+    // the sticky stage may still be 0×0, leaving the buffer at the canvas
+    // default 300×150 (the "ascii only at top corner" symptom).
+    requestAnimationFrame(() => requestAnimationFrame(resize));
+    window.addEventListener('load', resize);
+  })();
+
   // ─── Solution stack: one sticky stage, content swaps per slide ───
   (function initSolutionStack() {
     const stack = document.querySelector('.solution-stack');
@@ -2935,7 +3531,7 @@
     const sections = Array.from(stage.querySelectorAll('.solution'));
     if (!sections.length) return;
     const DELAY_MS = 300;
-    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+    const isMobile = () => window.matchMedia('(max-width: 640px)').matches;
 
     const slots = sections.map(section => {
       const list = section.querySelector('.cards-list');
@@ -3008,9 +3604,14 @@
 
     const navDots = Array.from(stage.querySelectorAll('.solution-nav .solution-dot'));
     const slotIdById = { services: 0, data: 1, ai: 2, web: 3 };
+    // Map slot index → bg-video data-slot key (slot 0 has no video).
+    const slotBgKey = { 1: 'data', 2: 'ai', 3: 'web' };
+    const bgVideos = Array.from(document.querySelectorAll('.solution-bg-stack .bg-video'));
     let skipMode = false;
 
     let activeIdx = -1;
+    let wasInStack = false;
+    let lastScrollY = window.scrollY;
     function resetSlot(s) {
       s.section.classList.remove('cards-revealed');
       if (s.timer) { clearTimeout(s.timer); s.timer = null; }
@@ -3023,6 +3624,25 @@
         s.timer = null;
       }, DELAY_MS);
     }
+    // Sync the fixed BG-video, hero rain, and hero wall alpha to the
+    // current "where is the user" state. Called from both onScroll and
+    // skipToSlot so click-driven jumps update bg/rain even though the
+    // skipMode flag suppresses onScroll until the smooth scroll settles.
+    // dir: +1 = scrolling down (sweep top→bottom), -1 = up (bottom→top).
+    let lastBgKey = null;
+    function updateBgState(idx, inStack, dir) {
+      const inVideoSlot = inStack && idx >= 1;
+      const bgKey = inVideoSlot ? slotBgKey[idx] : null;
+      bgVideos.forEach(v => v.classList.toggle('active', v.dataset.slot === bgKey));
+      if (window.setHeroRainEnabled) window.setHeroRainEnabled(!inVideoSlot);
+      if (window.setHeroWallAlpha) window.setHeroWallAlpha(inVideoSlot ? 0.08 : 0.16);
+      // Trigger wall sweep when entering or changing a video bg.
+      if (bgKey !== lastBgKey && bgKey !== null && window.triggerHeroWallSweep) {
+        window.triggerHeroWallSweep(dir || 1);
+      }
+      lastBgKey = bgKey;
+    }
+
     function setActive(idx) {
       if (idx === activeIdx) return;
       const prevIdx = activeIdx;
@@ -3032,6 +3652,10 @@
       if (prevIdx >= 0) {
         resetSlot(slots[prevIdx]);
         scheduleReveal(slots[idx]);
+        // Burst only when entering a video-backed slot (1/data, 2/ai, 3/web)
+        if (idx >= 1 && window.triggerSolutionAsciiBurst) {
+          window.triggerSolutionAsciiBurst();
+        }
       }
     }
 
@@ -3041,8 +3665,16 @@
         slots[idx].section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         return;
       }
+      const fromIdx = activeIdx;
       skipMode = true;
       setActive(idx);
+      // skipMode suppresses onScroll, so the bg-video/rain/wall toggles
+      // wouldn't fire from there — update them explicitly here. The user
+      // is jumping directly into the stack, so inStack is true. dir is
+      // based on slot index movement so the wall sweep travels the
+      // matching way (forward → top→bottom, backward → bottom→top).
+      const clickDir = idx >= fromIdx ? 1 : -1;
+      updateBgState(idx, true, clickDir);
       const stackTop = stack.getBoundingClientRect().top + window.scrollY;
       const target = stackTop + slots[idx].offset + 8;
       // Force instant scroll: CSS html { scroll-behavior: smooth } would
@@ -3081,6 +3713,9 @@
       const rect = stack.getBoundingClientRect();
       const totalH = stack.offsetHeight;
       const scrolled = Math.max(0, Math.min(totalH - window.innerHeight, -rect.top));
+      // True while the sticky stage is pinned (stack covers the viewport).
+      // False before reaching the stack and after scrolling past it.
+      const inStack = rect.top <= 0 && rect.top >= -(totalH - window.innerHeight);
 
       let idx = 0;
       for (let i = 0; i < slots.length; i++) {
@@ -3088,6 +3723,19 @@
         if (i === slots.length - 1) idx = i;
       }
       setActive(idx);
+      const sy = window.scrollY;
+      const scrollDir = sy >= lastScrollY ? 1 : -1;
+      lastScrollY = sy;
+      updateBgState(idx, inStack, scrollDir);
+
+      // Re-entering the stack from outside (e.g. scrolling back up from
+      // Contact). setActive is a no-op when the active slot didn't change,
+      // so fire the burst here to flag the slot's BG video as fresh.
+      if (inStack && !wasInStack && idx >= 1
+          && window.triggerSolutionAsciiBurst) {
+        window.triggerSolutionAsciiBurst();
+      }
+      wasInStack = inStack;
 
       // Slot 0 (services) reveal once the stack reaches the viewport top.
       // Plain `progress > 0.04` failed with viewport-snap: scroll jumps
@@ -3122,15 +3770,43 @@
       return false;
     }
 
+    // Below 1200px: let About and Contact scroll natively so long content
+    // remains reachable. Snap still applies to the solution stack and
+    // section boundaries.
+    function inFreeScrollZone() {
+      if (window.matchMedia('(min-width: 1200px)').matches) return false;
+      const probe = window.scrollY + window.innerHeight * 0.5;
+      const ids = ['about', 'contact'];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.offsetTop;
+        const bottom = top + el.offsetHeight;
+        if (probe >= top && probe < bottom) return true;
+      }
+      return false;
+    }
+
     function getAnchors() {
       const vh = window.innerHeight;
       const anchors = [0];
       const about = document.getElementById('about');
-      if (about) anchors.push(about.offsetTop);
+      if (about) {
+        const top = about.offsetTop;
+        const bottom = top + about.offsetHeight;
+        // Per-viewport anchors inside About so long content is paginated
+        // (mirrors the contact-section approach below).
+        for (let y = top; y < bottom - vh * 0.5; y += vh) anchors.push(y);
+      }
       const stack = document.querySelector('.solution-stack');
       if (stack) {
         const stackTop = stack.offsetTop;
+        // Slot entry anchors (00..03)
         for (let i = 0; i < 4; i++) anchors.push(stackTop + i * vh);
+        // Hold anchor at slot-03's tail so the snap doesn't jump from
+        // slot-03 entry straight into Contact (2vh leap that visually
+        // skips slot 3).
+        anchors.push(stackTop + 4 * vh);
       }
       const contact = document.getElementById('contact');
       if (contact) {
@@ -3176,6 +3852,7 @@
 
     window.addEventListener('wheel', (e) => {
       if (shouldSkip(e.target)) return;
+      if (inFreeScrollZone()) return;
       e.preventDefault();
       const now = Date.now();
       if (scrolling || now - lastWheelTime < WHEEL_DEBOUNCE) return;
@@ -3192,6 +3869,7 @@
     }, { passive: true });
     window.addEventListener('touchend', (e) => {
       if (shouldSkip(touchStartTarget)) return;
+      if (inFreeScrollZone()) return;
       const dy = touchStartY - e.changedTouches[0].clientY;
       if (Math.abs(dy) < 60) {
         // Tiny swipe — snap to nearest anchor
@@ -3215,6 +3893,7 @@
     // Keyboard PgUp/PgDn/Space — same snap
     window.addEventListener('keydown', (e) => {
       if (shouldSkip(e.target)) return;
+      if (inFreeScrollZone()) return;
       if (e.key === 'PageDown' || (e.key === ' ' && !e.shiftKey)) {
         e.preventDefault();
         snapTo(1);
