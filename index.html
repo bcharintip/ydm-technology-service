@@ -7,20 +7,20 @@
 <meta name="description" content="YDM Technology Service — transformation partner at the front line of technology. Enterprise platforms, data, and AI engineering.">
 <meta name="theme-color" content="#000">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="canonical" href="https://ydm-technology-service.vercel.app/">
+<link rel="canonical" href="https://ydm-technology-service-jtii.vercel.app/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="YDM Technology Services">
 <meta property="og:description" content="Transformation at the front line of technology.">
-<meta property="og:url" content="https://ydm-technology-service.vercel.app/">
-<meta property="og:image" content="https://ydm-technology-service.vercel.app/og-image.png">
+<meta property="og:url" content="https://ydm-technology-service-jtii.vercel.app/">
+<meta property="og:image" content="https://ydm-technology-service-jtii.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="YDM Technology Services">
 <meta name="twitter:description" content="Transformation at the front line of technology.">
-<meta name="twitter:image" content="https://ydm-technology-service.vercel.app/og-image.png">
+<meta name="twitter:image" content="https://ydm-technology-service-jtii.vercel.app/og-image.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -566,11 +566,11 @@
     flex-direction: column;
   }
   .about-grid {
-    display: grid;
-    grid-template-columns: 50% 30%;
-    column-gap: 20%;
+    display: flex;
+    justify-content: space-between;
     align-items: stretch;
     flex: 1;
+    gap: 80px;
   }
   .about-grid .left .section-head {
     margin-bottom: 24px;
@@ -578,7 +578,9 @@
   .about-grid .left {
     display: flex;
     flex-direction: column;
-    flex: 0;
+    flex: 0 1 auto;
+    width: fit-content;
+    max-width: 960px;
     padding-top: 56px;
   }
   .about-grid .left h2 {
@@ -651,13 +653,16 @@
 
   /* About — right-column media placeholder */
   .about-media {
-    align-self: stretch;
-    display: flex;
+    display: block;
+    flex: 0 0 auto;
+    width: 640px;
+    max-width: 100%;
+    align-self: center;
   }
   .media-placeholder {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
     border: 1px dashed var(--line-strong);
     background:
       linear-gradient(135deg, rgba(255,255,0,0.015) 0%, transparent 60%),
@@ -720,9 +725,12 @@
     .about-grid .about-media {
       order: 4;
       margin: 4px 0 8px;
-      max-width: 480px;
-      align-self: center;
+      max-width: none;
+      align-self: stretch;
       width: 100%;
+    }
+    .about-grid .about-media .media-placeholder {
+      aspect-ratio: 4 / 3;
     }
     .about-grid .left > .mono { order: 5; margin: 12px 0 4px !important; }
     .about-grid .left .pillars { order: 6; }
@@ -2858,9 +2866,41 @@
       logoReady = true;
       if (cols) {
         grid = computeGrid();
+        assignCascadeDelays();
         startTime = performance.now();
       }
     };
+
+    // Cascade delays span just the logo's vertical bbox (top→bot row),
+    // not the whole canvas height. Without this the wave wastes its
+    // first few hundred ms travelling through empty rows above the
+    // logo (since only logo cells flicker), so the user sees a
+    // "loading" pause before anything happens. Recomputed every
+    // resize and after logoImg loads (grid changes both times).
+    function assignCascadeDelays() {
+      if (!cols || !rows || !grid || !delay) return;
+      let top = rows, bot = -1;
+      for (let r = 0; r < rows; r++) {
+        let has = false;
+        for (let c = 0; c < cols; c++) {
+          if (grid[r * cols + c]) { has = true; break; }
+        }
+        if (has) {
+          if (r < top) top = r;
+          if (r > bot) bot = r;
+        }
+      }
+      // Fallback before logo image loads — cascade across the whole canvas.
+      if (bot < 0) { top = 0; bot = rows - 1; }
+      const span = Math.max(1, bot - top);
+      const cascadeMs = 1200;
+      const n = cols * rows;
+      for (let i = 0; i < n; i++) {
+        const r = (i / cols) | 0;
+        const offset = Math.max(0, r - top);
+        delay[i] = ((offset / span) * cascadeMs + Math.random() * 150) | 0;
+      }
+    }
 
     function pickOff(i) {
       const r = (chars[i] + i * 7) % (CHAR_OFF.length + SPACE_WEIGHT);
@@ -2871,7 +2911,7 @@
       offCtx.clearRect(0, 0, cols, rows);
       const g = new Uint8Array(cols * rows);
       if (!logoReady) return g;
-      const logoScale = window.innerWidth <= 768 ? 0.69 : 0.576;
+      const logoScale = window.innerWidth <= 768 ? 0.897 : 0.749;
       let dw = cols * logoScale;
       let dh = dw / LOGO_ASPECT;
       if (dh > rows * logoScale) {
@@ -2910,10 +2950,10 @@
       logoBlink = new Float32Array(n);
       for (let i = 0; i < n; i++) {
         chars[i] = (Math.random() * 256) | 0;
-        delay[i] = (Math.random() * 1800) | 0;
         logoBlink[i] = Math.random(); // per-cell dissolve threshold
       }
       grid = computeGrid();
+      assignCascadeDelays();
       startTime = performance.now();
     }
 
@@ -2956,6 +2996,7 @@
           sweepCenter = h + sweepBandH * 0.5 - e * travel;
         }
       }
+
 
       const M_INVERT = 40;
       const M_INVERT_SQ = M_INVERT * M_INVERT;
@@ -3035,6 +3076,31 @@
 
           rState[idx] += (target - rState[idx]) * ease;
           const rv = rState[idx];
+
+          // Logo formation cascade — only LOGO cells participate, so
+          // the blinking band is exactly the width of the logo (no
+          // flicker on non-logo cells). Each logo cell's wall glyph
+          // morphs in place into a bright CHAR_ON: first ~55% of the
+          // window picks a random CHAR_ON each frame (the "blink"),
+          // then it settles to the stable per-cell logo char so there
+          // is no visible swap when the existing render takes over.
+          // Non-logo cells fall through to the existing wall renderer
+          // and stay quiet — the wave doesn't pass over them at all.
+          const FLICKER_MS = 360;
+          if (eGrid === 1 && localElapsed >= 0 && localElapsed < FLICKER_MS) {
+            const t = localElapsed / FLICKER_MS;
+            const ramp = Math.min(1, localElapsed / 90);
+            const a = (0.42 + ramp * 0.55) * logoOpacity;
+            if (a >= 0.02) {
+              const ch = t > 0.55
+                ? CHAR_ON[chars[idx] % CHAR_ON.length]
+                : CHAR_ON[(Math.random() * CHAR_ON.length) | 0];
+              ctx.fillStyle = `rgba(255,255,255,${a.toFixed(3)})`;
+              ctx.fillText(ch, baseX, baseY);
+            }
+            continue;
+          }
+
           // Per-cell dissolve threshold: when blinkT > logoOpacity the cell has "blinked back"
           // into the BG wall. Draw it as a regular BG-wall glyph so the logo dissolves into
           // the surrounding texture instead of leaving a hole. On the edge of the dissolve
@@ -3737,10 +3803,13 @@
       }
       wasInStack = inStack;
 
-      // Slot 0 (services) reveal once the stack reaches the viewport top.
-      // Plain `progress > 0.04` failed with viewport-snap: scroll jumps
-      // directly to the slot offset (progress = 0) and never triggers.
-      if (idx === 0 && rect.top <= 0) {
+      // Slot 0 (services) reveal — trigger as the stack approaches the
+      // viewport so the 300ms DELAY_MS completes by the time the stack
+      // pins. With `rect.top <= 0` the timer only started after snap
+      // landed, leaving ~600ms of blank slot that read as "need to
+      // scroll again". Half a viewport of lead-in lets the cascade
+      // animate in just as the slot becomes visible.
+      if (idx === 0 && rect.top <= window.innerHeight * 0.5) {
         scheduleReveal(slots[0]);
       }
     }
