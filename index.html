@@ -3839,19 +3839,27 @@
       return false;
     }
 
-    // Below 1200px: let About and Contact scroll natively so long content
-    // remains reachable. Snap still applies to the solution stack and
-    // section boundaries.
+    // Free-scroll zones — snap is suppressed and native scroll takes over.
+    // Contact is always free-scroll (long form + expandable items pair
+    // poorly with viewport-snap pagination). About is free-scroll below
+    // 1700px because the two-column desktop layout still overflows the
+    // viewport at common laptop widths (~1440/1536) — only very wide
+    // monitors fit About in one screen, so snap is reserved for those.
     function inFreeScrollZone() {
-      if (window.matchMedia('(min-width: 1200px)').matches) return false;
       const probe = window.scrollY + window.innerHeight * 0.5;
-      const ids = ['about', 'contact'];
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const top = el.offsetTop;
-        const bottom = top + el.offsetHeight;
+      const contact = document.getElementById('contact');
+      if (contact) {
+        const top = contact.offsetTop;
+        const bottom = top + contact.offsetHeight;
         if (probe >= top && probe < bottom) return true;
+      }
+      if (!window.matchMedia('(min-width: 1700px)').matches) {
+        const about = document.getElementById('about');
+        if (about) {
+          const top = about.offsetTop;
+          const bottom = top + about.offsetHeight;
+          if (probe >= top && probe < bottom) return true;
+        }
       }
       return false;
     }
@@ -3879,9 +3887,10 @@
       }
       const contact = document.getElementById('contact');
       if (contact) {
-        const top = contact.offsetTop;
-        const bottom = top + contact.offsetHeight;
-        for (let y = top; y < bottom; y += vh) anchors.push(y);
+        // Only the entry anchor — once inside contact, inFreeScrollZone
+        // suppresses snap so the long form scrolls natively without
+        // viewport pagination.
+        anchors.push(contact.offsetTop);
       }
       const maxScroll = Math.max(0, document.documentElement.scrollHeight - vh);
       anchors.push(maxScroll);
