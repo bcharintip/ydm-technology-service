@@ -379,7 +379,8 @@
 
   /* ─── Hero ───────────────────────── */
   .hero {
-    min-height: 100vh;
+    height: 100vh;
+    height: 100svh;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -432,12 +433,13 @@
     z-index: 2;
     padding: 40px 32px;
     flex: 1;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .hero-center h1 {
-    font-size: clamp(56px, 11vw, 180px);
+    font-size: clamp(40px, min(11vw, 16vh), 180px);
     font-weight: 700;
     text-align: center;
     width: 100%;
@@ -461,7 +463,10 @@
   }
 
   .hero-bottom {
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 2;
     padding: 32px 32px 48px;
     display: grid;
@@ -551,6 +556,19 @@
       justify-self: center;
       text-align: center;
     }
+  }
+  /* Short viewports (landscape phones, compact laptops) — squeeze padding so
+     the absolute hero-bottom doesn't overlap hero-center contents. */
+  @media (max-height: 700px) {
+    .hero-top { padding: 80px 32px 0; }
+    .hero-bottom { padding: 16px 32px 24px; }
+    .hero-bottom .lead { min-height: 0; font-size: clamp(15px, 1.4vw, 18px); }
+  }
+  @media (max-height: 520px) {
+    .hero-top { padding: 64px 20px 0; }
+    .hero-bottom { padding: 12px 20px 16px; gap: 16px; }
+    .hero-bottom .lead { font-size: 13px; }
+    .hero-bottom .scroll-ind .target { font-size: 18px; }
   }
 
   /* ─── Section 02: About & Why ───────────────────────── */
